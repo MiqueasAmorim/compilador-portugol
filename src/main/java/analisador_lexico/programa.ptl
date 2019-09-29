@@ -1,0 +1,17 @@
+programa soma;
+constante 
+    PI = 3.14;
+variavel 
+    a,b: inteiro;
+
+inicio
+    a := 3;
+    escreva('Digite um valor: ');
+    leia(b);
+    enquanto (a < b) faca
+        inicio
+            a := a + 1;
+        fim;
+    repita
+    
+fim.

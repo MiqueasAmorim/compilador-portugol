@@ -17,6 +17,10 @@ public class PrincipalView extends javax.swing.JFrame {
      */
     public PrincipalView() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setExtendedState(MAXIMIZED_BOTH);
+        this.tblOutput.getColumnModel().getColumn(0).setPreferredWidth(50);
+        this.tblOutput.getColumnModel().getColumn(1).setPreferredWidth(600);
     }
 
     /**
@@ -29,51 +33,54 @@ public class PrincipalView extends javax.swing.JFrame {
     private void initComponents() {
 
         jSeparator5 = new javax.swing.JSeparator();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        paneCodigo = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        txtAreaCodigo = new javax.swing.JTextArea();
+        paneAnalises = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
-        jPanel3 = new javax.swing.JPanel();
+        jScrollPane = new javax.swing.JScrollPane();
+        tblTokens = new javax.swing.JTable();
+        paneOutput = new javax.swing.JTabbedPane();
+        panelOutput = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblOutput = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnAbrir = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnDesfazer = new javax.swing.JButton();
+        btnRefazer = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton5 = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        btnCompilar = new javax.swing.JButton();
+        menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuItemNovo = new javax.swing.JMenuItem();
+        menuItemAbrir = new javax.swing.JMenuItem();
+        menuItemSalvar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuItemDesfazer = new javax.swing.JMenuItem();
+        menuItemRefazer = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        menuItemCompilar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("IDE Portugol");
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtAreaCodigo.setColumns(20);
+        txtAreaCodigo.setRows(5);
+        jScrollPane1.setViewportView(txtAreaCodigo);
 
         jPanel1.add(jScrollPane1);
 
-        jTabbedPane1.addTab("semtitulo.ptl", jPanel1);
+        paneCodigo.addTab("semtitulo.ptl", jPanel1);
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -84,15 +91,15 @@ public class PrincipalView extends javax.swing.JFrame {
                 "Linha", "ID", "Token", "Lexema"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane.setViewportView(tblTokens);
 
-        jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jScrollPane, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane2.addTab("Tabela de tokens", jPanel2);
+        paneAnalises.addTab("Tabela de tokens", jPanel2);
 
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        panelOutput.setLayout(new java.awt.BorderLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblOutput.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -100,88 +107,98 @@ public class PrincipalView extends javax.swing.JFrame {
                 "Linha", "Mensagem"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setHeaderValue("Linha");
-            jTable2.getColumnModel().getColumn(1).setHeaderValue("Mensagem");
+        jScrollPane3.setViewportView(tblOutput);
+        if (tblOutput.getColumnModel().getColumnCount() > 0) {
+            tblOutput.getColumnModel().getColumn(0).setHeaderValue("Linha");
+            tblOutput.getColumnModel().getColumn(1).setHeaderValue("Mensagem");
         }
 
-        jPanel3.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+        panelOutput.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane3.addTab("Output", jPanel3);
+        paneOutput.addTab("Output", panelOutput);
 
         jToolBar1.setRollover(true);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-file.png"))); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setPreferredSize(new java.awt.Dimension(30, 30));
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-file.png"))); // NOI18N
+        btnNovo.setFocusable(false);
+        btnNovo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnNovo.setPreferredSize(new java.awt.Dimension(30, 30));
+        btnNovo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnNovo);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open-file.png"))); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setPreferredSize(new java.awt.Dimension(30, 30));
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        btnAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open-file.png"))); // NOI18N
+        btnAbrir.setFocusable(false);
+        btnAbrir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAbrir.setPreferredSize(new java.awt.Dimension(30, 30));
+        btnAbrir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnAbrir);
+
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save-file.png"))); // NOI18N
+        btnSalvar.setFocusable(false);
+        btnSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalvar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnSalvar);
         jToolBar1.add(jSeparator1);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/undo.png"))); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setPreferredSize(new java.awt.Dimension(30, 30));
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        btnDesfazer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/undo.png"))); // NOI18N
+        btnDesfazer.setFocusable(false);
+        btnDesfazer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDesfazer.setPreferredSize(new java.awt.Dimension(30, 30));
+        btnDesfazer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnDesfazer);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redo.png"))); // NOI18N
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setPreferredSize(new java.awt.Dimension(30, 30));
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
+        btnRefazer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redo.png"))); // NOI18N
+        btnRefazer.setFocusable(false);
+        btnRefazer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRefazer.setPreferredSize(new java.awt.Dimension(30, 30));
+        btnRefazer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnRefazer);
         jToolBar1.add(jSeparator2);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compile.png"))); // NOI18N
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setPreferredSize(new java.awt.Dimension(30, 30));
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
+        btnCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compile.png"))); // NOI18N
+        btnCompilar.setFocusable(false);
+        btnCompilar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCompilar.setPreferredSize(new java.awt.Dimension(30, 30));
+        btnCompilar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnCompilar);
 
         jMenu1.setText("Arquivo");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-file.png"))); // NOI18N
-        jMenuItem1.setText("Abrir arquivo");
-        jMenu1.add(jMenuItem1);
+        menuItemNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-file.png"))); // NOI18N
+        menuItemNovo.setText("Novo");
+        jMenu1.add(menuItemNovo);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open-file.png"))); // NOI18N
-        jMenuItem2.setText("Salvar arquivo");
-        jMenu1.add(jMenuItem2);
+        menuItemAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open-file.png"))); // NOI18N
+        menuItemAbrir.setText("Abrir");
+        jMenu1.add(menuItemAbrir);
 
-        jMenuBar1.add(jMenu1);
+        menuItemSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save-file.png"))); // NOI18N
+        menuItemSalvar.setText("Salvar");
+        jMenu1.add(menuItemSalvar);
+
+        menuBar.add(jMenu1);
 
         jMenu2.setText("Editar");
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/undo.png"))); // NOI18N
-        jMenuItem3.setText("Desfazer");
-        jMenu2.add(jMenuItem3);
+        menuItemDesfazer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/undo.png"))); // NOI18N
+        menuItemDesfazer.setText("Desfazer");
+        jMenu2.add(menuItemDesfazer);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redo.png"))); // NOI18N
-        jMenuItem4.setText("Refazer");
-        jMenu2.add(jMenuItem4);
+        menuItemRefazer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redo.png"))); // NOI18N
+        menuItemRefazer.setText("Refazer");
+        jMenu2.add(menuItemRefazer);
 
-        jMenuBar1.add(jMenu2);
+        menuBar.add(jMenu2);
 
         jMenu3.setText("Executar");
 
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compile.png"))); // NOI18N
-        jMenuItem5.setText("Compilar");
-        jMenu3.add(jMenuItem5);
+        menuItemCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compile.png"))); // NOI18N
+        menuItemCompilar.setText("Compilar");
+        jMenu3.add(menuItemCompilar);
 
-        jMenuBar1.add(jMenu3);
+        menuBar.add(jMenu3);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,11 +207,11 @@ public class PrincipalView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTabbedPane3)
+                    .addComponent(paneOutput)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(paneAnalises, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)))
+                        .addComponent(paneCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -204,10 +221,10 @@ public class PrincipalView extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
+                    .addComponent(paneCodigo)
+                    .addComponent(paneAnalises, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                .addComponent(paneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -250,35 +267,37 @@ public class PrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnAbrir;
+    private javax.swing.JButton btnCompilar;
+    private javax.swing.JButton btnDesfazer;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnRefazer;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuItemAbrir;
+    private javax.swing.JMenuItem menuItemCompilar;
+    private javax.swing.JMenuItem menuItemDesfazer;
+    private javax.swing.JMenuItem menuItemNovo;
+    private javax.swing.JMenuItem menuItemRefazer;
+    private javax.swing.JMenuItem menuItemSalvar;
+    private javax.swing.JTabbedPane paneAnalises;
+    private javax.swing.JTabbedPane paneCodigo;
+    private javax.swing.JTabbedPane paneOutput;
+    private javax.swing.JPanel panelOutput;
+    private javax.swing.JTable tblOutput;
+    private javax.swing.JTable tblTokens;
+    private javax.swing.JTextArea txtAreaCodigo;
     // End of variables declaration//GEN-END:variables
 }

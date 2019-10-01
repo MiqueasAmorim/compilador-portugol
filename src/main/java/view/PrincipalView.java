@@ -92,7 +92,15 @@ public class PrincipalView extends javax.swing.JFrame {
             new String [] {
                 "Linha", "ID", "Token", "Lexema"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane.setViewportView(tblTokens);
 
         jPanel2.add(jScrollPane, java.awt.BorderLayout.CENTER);
@@ -108,12 +116,16 @@ public class PrincipalView extends javax.swing.JFrame {
             new String [] {
                 "Linha", "Mensagem"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(tblOutput);
-        if (tblOutput.getColumnModel().getColumnCount() > 0) {
-            tblOutput.getColumnModel().getColumn(0).setHeaderValue("Linha");
-            tblOutput.getColumnModel().getColumn(1).setHeaderValue("Mensagem");
-        }
 
         panelOutput.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 

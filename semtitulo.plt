@@ -1,1 +1,1 @@
-programa teste;
+verdadeiro

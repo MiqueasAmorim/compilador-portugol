@@ -64,6 +64,7 @@ real = [0-9]+ \. [0-9]+
 ":=" { id+=1; return createToken(id, Token.OP_ATRIBUICAO); }
 
 /* Palavras chaves */
+
 "programa" { id+=1; return createToken(id, Token.PC_PROGRAMA); }
 "inicio" { id+=1; return createToken(id, Token.PC_INICIO); }
 "fim" { id+=1; return createToken(id, Token.PC_FIM); }
@@ -85,9 +86,12 @@ real = [0-9]+ \. [0-9]+
 "booleano" { id+=1; return createToken(id, Token.PC_BOOLEANO); }
 "leia" { id+=1; return createToken(id, Token.PC_LEIA); }
 "escreva" { id+=1; return createToken(id, Token.PC_ESCREVA); }
+"verdadeiro" { id+=1; return createToken(id, Token.PC_VERDADEIRO); }
+"falso" { id+=1; return createToken(id, Token.PC_FALSO); }
 
 {inteiro} { id+=1; return createToken(id, Token.INTEIRO); }
 {real} { id+=1; return createToken(id, Token.REAL); }
 {id} { id+=1; return createToken(id, Token.IDENTIFICADOR); }
+
 . { throw new RuntimeException("Caractere inválido " + yytext() + " na linha " + yyline + ", coluna " +yycolumn); }
 

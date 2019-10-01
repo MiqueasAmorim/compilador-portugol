@@ -1,5 +1,10 @@
 package view;
 
+import javax.swing.JButton;
+import javax.swing.JMenuItem;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -82,10 +87,7 @@ public class PrincipalView extends javax.swing.JFrame {
 
         tblTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Linha", "ID", "Token", "Lexema"
@@ -207,11 +209,11 @@ public class PrincipalView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(paneOutput)
+                    .addComponent(paneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(paneAnalises, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(paneAnalises, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(paneCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)))
+                        .addComponent(paneCodigo)))
                 .addContainerGap())
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -300,4 +302,68 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JTable tblTokens;
     private javax.swing.JTextArea txtAreaCodigo;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getBtnAbrir() {
+        return btnAbrir;
+    }
+
+    public JButton getBtnCompilar() {
+        return btnCompilar;
+    }
+
+    public JButton getBtnDesfazer() {
+        return btnDesfazer;
+    }
+
+    public JButton getBtnNovo() {
+        return btnNovo;
+    }
+
+    public JButton getBtnRefazer() {
+        return btnRefazer;
+    }
+
+    public JButton getBtnSalvar() {
+        return btnSalvar;
+    }
+
+    public JMenuItem getMenuItemAbrir() {
+        return menuItemAbrir;
+    }
+
+    public JMenuItem getMenuItemCompilar() {
+        return menuItemCompilar;
+    }
+
+    public JMenuItem getMenuItemDesfazer() {
+        return menuItemDesfazer;
+    }
+
+    public JMenuItem getMenuItemNovo() {
+        return menuItemNovo;
+    }
+
+    public JMenuItem getMenuItemRefazer() {
+        return menuItemRefazer;
+    }
+
+    public JMenuItem getMenuItemSalvar() {
+        return menuItemSalvar;
+    }
+
+    public JTable getTblOutput() {
+        return tblOutput;
+    }
+
+    public JTable getTblTokens() {
+        return tblTokens;
+    }
+
+    public JTextArea getTxtAreaCodigo() {
+        return txtAreaCodigo;
+    }
+
+    
+
+
 }

@@ -5,10 +5,14 @@
  */
 package analisador_lexico;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import model.TokenModel;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,19 +20,44 @@ import java.nio.file.Paths;
  */
 
 public class AnalisadorLexico {
-    public static void main(String[] args) throws IOException {
+    
+    ArrayList<TokenModel> tokens;
+    
+    public AnalisadorLexico() throws FileNotFoundException, IOException {
 
-        String rootPath = Paths.get("").toAbsolutePath(). toString();
-        String subPath = "/src/main/java/analisador_lexico/";
+        tokens = new ArrayList<>();
+        
+        //String rootPath = Paths.get("").toAbsolutePath(). toString();
+        //String subPath = "/src/main/java/analisador_lexico/";
 
-        String sourceCode = rootPath + subPath + "programa.ptl";
-
-        Lexer lexical = new Lexer(new FileReader(sourceCode));
-
+        //String sourceCode = rootPath + subPath + "programa.ptl";
+ 
+    }
+    
+    public void analisar(String codigo) throws FileNotFoundException, IOException {
+        //Lexer lexical = new Lexer(new FileReader(sourceCode));
+        this.tokens.clear();
+        File arquivoTemp = new File("semtitulo.plt");
+        FileWriter fw = new FileWriter(arquivoTemp);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(codigo);
+        bw.flush();
+        bw.close();
+        fw.close();
+        Lexer lexical = new Lexer(new FileReader(arquivoTemp));
+        
         TokenModel token;
 
         while ((token = lexical.yylex()) != null) {
-            System.out.println("<" + token.getID() + ", " + token.getNome() + ", " + token.getLexema() + "> (" + token.getLinha() + " - " + token.getColuna() + ")");
+            this.tokens.add(token);
+            //System.out.println("<" + token.getID() + ", " + token.getNome() + ", " + token.getLexema() + "> (" + token.getLinha() + " - " + token.getColuna() + ")");
         }
+        
     }
+
+    public ArrayList<TokenModel> getTokens() {
+        return tokens;
+    }
+    
+    
 }

@@ -37,7 +37,7 @@ public class AnalisadorLexico {
     public void analisar(String codigo) throws FileNotFoundException, IOException {
         //Lexer lexical = new Lexer(new FileReader(sourceCode));
         this.tokens.clear();
-        File arquivoTemp = new File("semtitulo.plt");
+        File arquivoTemp = new File("semtitulo.ptl");
         FileWriter fw = new FileWriter(arquivoTemp);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(codigo);

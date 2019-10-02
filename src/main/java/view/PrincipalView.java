@@ -24,8 +24,6 @@ public class PrincipalView extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
-        this.tblOutput.getColumnModel().getColumn(0).setPreferredWidth(50);
-        this.tblOutput.getColumnModel().getColumn(1).setPreferredWidth(600);
     }
 
     /**
@@ -114,11 +112,11 @@ public class PrincipalView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Linha", "Mensagem"
+                "Mensagem"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

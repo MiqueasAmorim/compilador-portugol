@@ -40,11 +40,13 @@ public class PrincipalPresenter {
                         for (TokenModel token : analisadorLexico.getTokens()) {
                             tblModel.addRow(new Object[]{token.getLinha(), token.getID(), token.getNome(), token.getLexema()});
                         }
+                        DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
+                        tblModelOutput.setNumRows(0);
                     } catch (RuntimeException | IOException ex) {
                         Logger.getLogger(PrincipalPresenter.class.getName()).log(Level.SEVERE, null, ex);
                         DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
                         tblModelOutput.setNumRows(0);
-                        tblModelOutput.addRow(new Object[]{null, ex.getMessage()});
+                        tblModelOutput.addRow(new Object[]{ex.getMessage()});
                     } finally {
                         DefaultTableModel tblModel = (DefaultTableModel) view.getTblTokens().getModel();
                         tblModel.setNumRows(0);

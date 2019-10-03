@@ -22,7 +22,7 @@ private TokenModel createToken(int id, Token nome) {
 
 %}
 
-brancos = [\n| |\t]
+brancos = [\n| |\t|\r]
 id = [A-Za-z]*
 inteiro = 0|[1-9][0-9]*
 real = [0-9]+ \. [0-9]+

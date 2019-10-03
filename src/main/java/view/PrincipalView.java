@@ -2,8 +2,12 @@ package view;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,14 +40,6 @@ public class PrincipalView extends javax.swing.JFrame {
     private void initComponents() {
 
         jSeparator5 = new javax.swing.JSeparator();
-        paneCodigo = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtAreaCodigo = new javax.swing.JTextArea();
-        paneAnalises = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane = new javax.swing.JScrollPane();
-        tblTokens = new javax.swing.JTable();
         paneOutput = new javax.swing.JTabbedPane();
         panelOutput = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -57,6 +53,15 @@ public class PrincipalView extends javax.swing.JFrame {
         btnRefazer = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         btnCompilar = new javax.swing.JButton();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        paneAnalises = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane = new javax.swing.JScrollPane();
+        tblTokens = new javax.swing.JTable();
+        paneCodigo = new javax.swing.JTabbedPane();
+        panelCodigo = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPaneCodigo = new javax.swing.JTextPane();
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemNovo = new javax.swing.JMenuItem();
@@ -70,40 +75,6 @@ public class PrincipalView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("IDE Portugol");
-
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
-
-        txtAreaCodigo.setColumns(20);
-        txtAreaCodigo.setRows(5);
-        jScrollPane1.setViewportView(txtAreaCodigo);
-
-        jPanel1.add(jScrollPane1);
-
-        paneCodigo.addTab("semtitulo.ptl", jPanel1);
-
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        tblTokens.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Linha", "ID", "Token", "Lexema"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane.setViewportView(tblTokens);
-
-        jPanel2.add(jScrollPane, java.awt.BorderLayout.CENTER);
-
-        paneAnalises.addTab("Tabela de tokens", jPanel2);
 
         panelOutput.setLayout(new java.awt.BorderLayout());
 
@@ -174,6 +145,42 @@ public class PrincipalView extends javax.swing.JFrame {
         btnCompilar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnCompilar);
 
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        tblTokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Linha", "ID", "Token", "Lexema"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane.setViewportView(tblTokens);
+
+        jPanel2.add(jScrollPane, java.awt.BorderLayout.CENTER);
+
+        paneAnalises.addTab("Tabela de tokens", jPanel2);
+
+        jSplitPane1.setLeftComponent(paneAnalises);
+
+        panelCodigo.setLayout(new javax.swing.BoxLayout(panelCodigo, javax.swing.BoxLayout.LINE_AXIS));
+
+        jScrollPane1.setViewportView(jTextPaneCodigo);
+
+        panelCodigo.add(jScrollPane1);
+
+        paneCodigo.addTab("semtitulo.ptl", panelCodigo);
+
+        jSplitPane1.setRightComponent(paneCodigo);
+
         jMenu1.setText("Arquivo");
 
         menuItemNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-file.png"))); // NOI18N
@@ -216,25 +223,20 @@ public class PrincipalView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(paneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(paneAnalises, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(paneCodigo)))
-                .addContainerGap())
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paneOutput, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(paneCodigo)
-                    .addComponent(paneAnalises, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(paneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                 .addContainerGap())
@@ -288,7 +290,6 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
@@ -296,6 +297,8 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTextPane jTextPaneCodigo;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuItemAbrir;
@@ -307,10 +310,10 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JTabbedPane paneAnalises;
     private javax.swing.JTabbedPane paneCodigo;
     private javax.swing.JTabbedPane paneOutput;
+    private javax.swing.JPanel panelCodigo;
     private javax.swing.JPanel panelOutput;
     private javax.swing.JTable tblOutput;
     private javax.swing.JTable tblTokens;
-    private javax.swing.JTextArea txtAreaCodigo;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBtnAbrir() {
@@ -369,11 +372,13 @@ public class PrincipalView extends javax.swing.JFrame {
         return tblTokens;
     }
 
-    public JTextArea getTxtAreaCodigo() {
-        return txtAreaCodigo;
+    public JTabbedPane getPaneCodigo() {
+        return paneCodigo;
     }
 
+    public JTextPane getjTextPaneCodigo() {
+        return jTextPaneCodigo;
+    }
     
-
-
+    
 }

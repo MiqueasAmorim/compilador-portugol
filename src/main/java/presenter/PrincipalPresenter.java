@@ -6,12 +6,18 @@
 package presenter;
 
 import analisador_lexico.AnalisadorLexico;
+import editor.KeywordStyledDocument;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 import model.TokenModel;
 import view.PrincipalView;
 
@@ -29,11 +35,21 @@ public class PrincipalPresenter {
             view = new PrincipalView();
             analisadorLexico = new AnalisadorLexico();
 
+            StyleContext styleContext = new StyleContext();
+            Style defaultStyle = styleContext.getStyle(StyleContext.DEFAULT_STYLE);
+            Style cwStyle = styleContext.addStyle("ConstantWidth", null);
+            StyleConstants.setForeground(cwStyle, Color.BLUE);
+            StyleConstants.setBold(cwStyle, true);
+            
+            view.getjTextPaneCodigo().setStyledDocument(new KeywordStyledDocument(defaultStyle, cwStyle));
+            view.getjTextPaneCodigo().setFont(new Font("Courier New", Font.PLAIN, 12));
+
             view.getBtnCompilar().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     try {
-                        String codigo = view.getTxtAreaCodigo().getText();
+
+                        String codigo = view.getjTextPaneCodigo().getText();
                         analisadorLexico.analisar(codigo);
                         DefaultTableModel tblModel = (DefaultTableModel) view.getTblTokens().getModel();
                         tblModel.setNumRows(0);
@@ -42,11 +58,11 @@ public class PrincipalPresenter {
                         }
                         DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
                         tblModelOutput.setNumRows(0);
+                        tblModelOutput.addRow(new Object[]{"<html><font color=\"green\"><b>Compilado com sucesso!</b></font></html>"});
                     } catch (RuntimeException | IOException ex) {
-                        Logger.getLogger(PrincipalPresenter.class.getName()).log(Level.SEVERE, null, ex);
                         DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
                         tblModelOutput.setNumRows(0);
-                        tblModelOutput.addRow(new Object[]{ex.getMessage()});
+                        tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>"+ex.getMessage()+"</b></font></html>"});
                     } finally {
                         DefaultTableModel tblModel = (DefaultTableModel) view.getTblTokens().getModel();
                         tblModel.setNumRows(0);

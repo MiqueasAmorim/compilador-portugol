@@ -1,12 +1,10 @@
 package view;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 /*
@@ -45,7 +43,6 @@ public class PrincipalView extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblOutput = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        btnNovo = new javax.swing.JButton();
         btnAbrir = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
@@ -64,12 +61,13 @@ public class PrincipalView extends javax.swing.JFrame {
         jTextPaneCodigo = new javax.swing.JTextPane();
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        menuItemNovo = new javax.swing.JMenuItem();
         menuItemAbrir = new javax.swing.JMenuItem();
         menuItemSalvar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuItemDesfazer = new javax.swing.JMenuItem();
         menuItemRefazer = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        menuItemAnaliseAutomatica = new javax.swing.JCheckBoxMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuItemCompilar = new javax.swing.JMenuItem();
 
@@ -101,13 +99,6 @@ public class PrincipalView extends javax.swing.JFrame {
         paneOutput.addTab("Output", panelOutput);
 
         jToolBar1.setRollover(true);
-
-        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-file.png"))); // NOI18N
-        btnNovo.setFocusable(false);
-        btnNovo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnNovo.setPreferredSize(new java.awt.Dimension(30, 30));
-        btnNovo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(btnNovo);
 
         btnAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open-file.png"))); // NOI18N
         btnAbrir.setFocusable(false);
@@ -183,10 +174,6 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jMenu1.setText("Arquivo");
 
-        menuItemNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new-file.png"))); // NOI18N
-        menuItemNovo.setText("Novo");
-        jMenu1.add(menuItemNovo);
-
         menuItemAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/open-file.png"))); // NOI18N
         menuItemAbrir.setText("Abrir");
         jMenu1.add(menuItemAbrir);
@@ -208,6 +195,13 @@ public class PrincipalView extends javax.swing.JFrame {
         jMenu2.add(menuItemRefazer);
 
         menuBar.add(jMenu2);
+
+        jMenu4.setText("Ferramentas");
+
+        menuItemAnaliseAutomatica.setText("Análise automática");
+        jMenu4.add(menuItemAnaliseAutomatica);
+
+        menuBar.add(jMenu4);
 
         jMenu3.setText("Executar");
 
@@ -284,12 +278,12 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JButton btnAbrir;
     private javax.swing.JButton btnCompilar;
     private javax.swing.JButton btnDesfazer;
-    private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRefazer;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
@@ -302,9 +296,9 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuItemAbrir;
+    private javax.swing.JCheckBoxMenuItem menuItemAnaliseAutomatica;
     private javax.swing.JMenuItem menuItemCompilar;
     private javax.swing.JMenuItem menuItemDesfazer;
-    private javax.swing.JMenuItem menuItemNovo;
     private javax.swing.JMenuItem menuItemRefazer;
     private javax.swing.JMenuItem menuItemSalvar;
     private javax.swing.JTabbedPane paneAnalises;
@@ -328,10 +322,6 @@ public class PrincipalView extends javax.swing.JFrame {
         return btnDesfazer;
     }
 
-    public JButton getBtnNovo() {
-        return btnNovo;
-    }
-
     public JButton getBtnRefazer() {
         return btnRefazer;
     }
@@ -350,10 +340,6 @@ public class PrincipalView extends javax.swing.JFrame {
 
     public JMenuItem getMenuItemDesfazer() {
         return menuItemDesfazer;
-    }
-
-    public JMenuItem getMenuItemNovo() {
-        return menuItemNovo;
     }
 
     public JMenuItem getMenuItemRefazer() {
@@ -379,6 +365,9 @@ public class PrincipalView extends javax.swing.JFrame {
     public JTextPane getjTextPaneCodigo() {
         return jTextPaneCodigo;
     }
-    
-    
+
+    public JCheckBoxMenuItem getMenuItemAnaliseAutomatica() {
+        return menuItemAnaliseAutomatica;
+    }
+
 }

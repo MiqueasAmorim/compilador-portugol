@@ -1,1 +1,7 @@
-verdadeiro
+teste.
+inteiro 
+
+[]
+[
+{
+#

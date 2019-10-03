@@ -26,9 +26,11 @@ brancos = [\n| |\t]
 id = [A-Za-z]*
 inteiro = 0|[1-9][0-9]*
 real = [0-9]+ \. [0-9]+
+comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*
 
 %%
 
+{comentario} { /**/ }
 {brancos} { /**/ }
 
 /* Pontuação */
@@ -92,6 +94,7 @@ real = [0-9]+ \. [0-9]+
 {inteiro} { id+=1; return createToken(id, Token.INTEIRO); }
 {real} { id+=1; return createToken(id, Token.REAL); }
 {id} { id+=1; return createToken(id, Token.IDENTIFICADOR); }
+{comentario} {id+=1; return createToken(id, Token.COMENTARIO);}
 
 . { throw new RuntimeException("Caractere inválido " + yytext() + " na linha " + yyline + ", coluna " +yycolumn); }
 

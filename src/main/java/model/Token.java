@@ -35,6 +35,6 @@ public enum Token {
     OP_E, OP_OU, OP_NAO,
     
     // Padroes
-    IDENTIFICADOR, INTEIRO, REAL,
+    IDENTIFICADOR, INTEIRO, REAL, COMENTARIO
     
 }

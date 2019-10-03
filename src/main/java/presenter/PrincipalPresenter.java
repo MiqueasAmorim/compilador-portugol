@@ -7,6 +7,7 @@ package presenter;
 
 import analisador_lexico.AnalisadorLexico;
 import editor.KeywordStyledDocument;
+import editor.NumeredBorder;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -49,7 +50,8 @@ public class PrincipalPresenter {
             Style cwStyle = styleContext.addStyle("ConstantWidth", null);
             StyleConstants.setForeground(cwStyle, Color.BLUE);
             StyleConstants.setBold(cwStyle, true);
-
+            
+            view.getjTextPaneCodigo().setBorder(new NumeredBorder());
             view.getjTextPaneCodigo().setStyledDocument(new KeywordStyledDocument(defaultStyle, cwStyle));
             view.getjTextPaneCodigo().setFont(new Font("Courier New", Font.PLAIN, 12));
 

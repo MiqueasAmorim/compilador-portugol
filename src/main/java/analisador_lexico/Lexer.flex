@@ -78,7 +78,6 @@ comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*
 "enquanto" { id+=1; return createToken(id, Token.PC_ENQUANTO); }
 "faca" { id+=1; return createToken(id, Token.PC_FACA); }
 "repita" { id+=1; return createToken(id, Token.PC_REPITA); }
-"ate que" { id+=1; return createToken(id, Token.PC_ATE_QUE); }
 "para" { id+=1; return createToken(id, Token.PC_PARA); }
 "ate" { id+=1; return createToken(id, Token.PC_ATE); }
 "inteiro" { id+=1; return createToken(id, Token.PC_INTEIRO); }

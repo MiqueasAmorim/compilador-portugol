@@ -59,7 +59,7 @@ public class PrincipalPresenter {
 
             view.getjTextPaneCodigo().setBorder(new NumeredBorder());
             view.getjTextPaneCodigo().setStyledDocument(new KeywordStyledDocument(defaultStyle, cwStyle));
-            view.getjTextPaneCodigo().setFont(new Font("Courier New", Font.PLAIN, 12));
+            //view.getjTextPaneCodigo().setFont(new Font("Courier New", Font.PLAIN, 12));
 
             view.getBtnCompilar().addActionListener(new ActionListener() {
                 @Override

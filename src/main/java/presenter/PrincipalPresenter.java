@@ -18,6 +18,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -45,6 +46,7 @@ public class PrincipalPresenter {
     private Timer timer = null;
     private KeyListener keyListenerTextPane = null;
     private boolean alteracoes = false;
+    private File arquivo = null;
 
     public PrincipalPresenter() {
         try {
@@ -167,39 +169,47 @@ public class PrincipalPresenter {
 
     public void salvar() throws Exception {
 
-        JFileChooser salvar = new JFileChooser();
-        int i = salvar.showSaveDialog(view);
-        File arquivo;
-        if (i == JFileChooser.APPROVE_OPTION) {
-            arquivo = salvar.getSelectedFile();
-            FileWriter arq = new FileWriter(arquivo + ".ptl");
-            view.getPaneCodigo().setTitleAt(0, arquivo.getName());
-            arq.write(view.getjTextPaneCodigo().getText());
-            arq.close();
+        if (this.arquivo == null) {
+
+            JFileChooser salvar = new JFileChooser();
+            int i = salvar.showSaveDialog(view);
+
+            if (i == JFileChooser.APPROVE_OPTION) {
+                this.arquivo = salvar.getSelectedFile();
+                FileWriter arq = new FileWriter(this.arquivo + ".ptl");
+                view.getPaneCodigo().setTitleAt(0, this.arquivo.getName());
+                arq.write(view.getjTextPaneCodigo().getText());
+                arq.close();
+            }
+        } else {
+            FileWriter fr = new FileWriter(this.arquivo);
+            BufferedWriter bw = new BufferedWriter(fr);
+            bw.write(view.getjTextPaneCodigo().getText());
+            bw.flush();
+            bw.close();
+            fr.close();
         }
     }
 
     public void abrir() throws FileNotFoundException, IOException {
         JFileChooser abrir = new JFileChooser();
         int i = abrir.showOpenDialog(view);
-        File arquivo;
+
         if (i == JFileChooser.APPROVE_OPTION) {
-            arquivo = abrir.getSelectedFile();
-            FileReader ler = new FileReader(arquivo);
-            view.getPaneCodigo().setTitleAt(0, arquivo.getName());
+            this.arquivo = abrir.getSelectedFile();
+            FileReader ler = new FileReader(this.arquivo);
+            view.getPaneCodigo().setTitleAt(0, this.arquivo.getName());
             BufferedReader p;
             p = new BufferedReader(ler);
-            String linha= "";
-            String AUX[]=null;
+            String linha = null;
+            String codigo = "";
             while ((linha = p.readLine()) != null) {
-                AUX= linha.split("\n");
-              
-               
+                codigo += linha + "\n";
+
             }
-            for (String AUX1 : AUX) {
-                view.getjTextPaneCodigo().setText(AUX1);
-            }  
-           
+
+            view.getjTextPaneCodigo().setText(codigo);
+            analiseLexica();
         }
     }
 

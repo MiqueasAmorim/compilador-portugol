@@ -22,8 +22,10 @@ private TokenModel createToken(int id, Token nome) {
 
 %}
 
+caractere = '[^\'\\\n\r\t]'
+string = '[^\'\\]*'
 brancos = [\n| |\t|\r]
-id = [A-Za-z]*
+id = [_A-Za-z]*
 inteiro = 0|[1-9][0-9]*
 real = [0-9]+ \. [0-9]+
 comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*
@@ -89,10 +91,21 @@ comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*
 "escreva" { id+=1; return createToken(id, Token.PC_ESCREVA); }
 "verdadeiro" { id+=1; return createToken(id, Token.PC_VERDADEIRO); }
 "falso" { id+=1; return createToken(id, Token.PC_FALSO); }
+"vetor" { id+=1; return createToken(id, Token.PC_VETOR); }
+"de" { id+=1; return createToken(id, Token.PC_DE); }
+"funcao" { id+=1; return createToken(id, Token.PC_FUNCAO); }
+"procedimento" { id+=1; return createToken(id, Token.PC_PROCEDIMENTO); }
+"caso" { id+=1; return createToken(id, Token.PC_CASO); }
+"pare" { id+=1; return createToken(id, Token.PC_PARE); }
+"continua" { id+=1; return createToken(id, Token.PC_CONTINUA); }
+"resto" { id+=1; return createToken(id, Token.PC_RESTO); }
+"quociente" { id+=1; return createToken(id, Token.PC_QUOCIENTE); }
 
 {inteiro} { id+=1; return createToken(id, Token.INTEIRO); }
 {real} { id+=1; return createToken(id, Token.REAL); }
 {id} { id+=1; return createToken(id, Token.IDENTIFICADOR); }
+{caractere} {id+=1; return createToken(id, Token.CARACTERE); }
+{string} {id+=1; return createToken(id, Token.STRING);}
 {comentario} {id+=1; return createToken(id, Token.COMENTARIO);}
 
 . { throw new RuntimeException("Caractere inválido " + yytext() + " na linha " + yyline + ", coluna " +yycolumn); }

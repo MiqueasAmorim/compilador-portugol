@@ -46,6 +46,16 @@ public class KeywordStyledDocument extends DefaultStyledDocument {
         keywords.add("escreva");
         keywords.add("verdadeiro");
         keywords.add("falso");
+        keywords.add("vetor");
+        keywords.add("de");
+        keywords.add("funcao");
+        keywords.add("procedimento");
+        keywords.add("caso");
+        keywords.add("pare");
+        keywords.add("continua");
+        keywords.add("resto");
+        keywords.add("quociente");
+        
     }
 
     public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {

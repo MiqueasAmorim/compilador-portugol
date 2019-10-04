@@ -59,7 +59,8 @@ public class KeywordStyledDocument extends DefaultStyledDocument {
     }
 
     public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {
-        super.insertString(offset, str, a);
+        str = str.replaceAll("\t", "    ");
+        super.insertString(offset, str, a);   
         refreshDocument();
     }
 
@@ -111,44 +112,4 @@ public class KeywordStyledDocument extends DefaultStyledDocument {
         return false;
     }
 
-//    private static final boolean isReservedWord(String word) {
-//        return (word.toUpperCase().trim().equals("CROSS")
-//                || word.toUpperCase().trim().equals("CURRENT_DATE")
-//                || word.toUpperCase().trim().equals("CURRENT_TIME")
-//                || word.toUpperCase().trim().equals("CURRENT_TIMESTAMP")
-//                || word.toUpperCase().trim().equals("DISTINCT")
-//                || word.toUpperCase().trim().equals("EXCEPT")
-//                || word.toUpperCase().trim().equals("EXISTS")
-//                || word.toUpperCase().trim().equals("FALSE")
-//                || word.toUpperCase().trim().equals("FETCH")
-//                || word.toUpperCase().trim().equals("FOR")
-//                || word.toUpperCase().trim().equals("FROM")
-//                || word.toUpperCase().trim().equals("FULL")
-//                || word.toUpperCase().trim().equals("GROUP")
-//                || word.toUpperCase().trim().equals("HAVING")
-//                || word.toUpperCase().trim().equals("INNER")
-//                || word.toUpperCase().trim().equals("INTERSECT")
-//                || word.toUpperCase().trim().equals("IS")
-//                || word.toUpperCase().trim().equals("JOIN")
-//                || word.toUpperCase().trim().equals("LIKE")
-//                || word.toUpperCase().trim().equals("LIMIT")
-//                || word.toUpperCase().trim().equals("MINUS")
-//                || word.toUpperCase().trim().equals("NATURAL")
-//                || word.toUpperCase().trim().equals("NOT")
-//                || word.toUpperCase().trim().equals("NULL")
-//                || word.toUpperCase().trim().equals("OFFSET")
-//                || word.toUpperCase().trim().equals("ON")
-//                || word.toUpperCase().trim().equals("ORDER")
-//                || word.toUpperCase().trim().equals("PRIMARY")
-//                || word.toUpperCase().trim().equals("ROWNUM")
-//                || word.toUpperCase().trim().equals("SELECT")
-//                || word.toUpperCase().trim().equals("SYSDATE")
-//                || word.toUpperCase().trim().equals("SYSTIME")
-//                || word.toUpperCase().trim().equals("SYSTIMESTAMP")
-//                || word.toUpperCase().trim().equals("TODAY")
-//                || word.toUpperCase().trim().equals("TRUE")
-//                || word.toUpperCase().trim().equals("UNION")
-//                || word.toUpperCase().trim().equals("UNIQUE")
-//                || word.toUpperCase().trim().equals("WHERE"));
-//    }
 }

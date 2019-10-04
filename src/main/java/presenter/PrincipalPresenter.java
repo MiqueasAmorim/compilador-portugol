@@ -17,9 +17,15 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Style;
@@ -50,7 +56,7 @@ public class PrincipalPresenter {
             Style cwStyle = styleContext.addStyle("ConstantWidth", null);
             StyleConstants.setForeground(cwStyle, Color.BLUE);
             StyleConstants.setBold(cwStyle, true);
-            
+
             view.getjTextPaneCodigo().setBorder(new NumeredBorder());
             view.getjTextPaneCodigo().setStyledDocument(new KeywordStyledDocument(defaultStyle, cwStyle));
             view.getjTextPaneCodigo().setFont(new Font("Courier New", Font.PLAIN, 12));
@@ -111,6 +117,27 @@ public class PrincipalPresenter {
         } catch (IOException ex) {
             Logger.getLogger(PrincipalPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
+        view.getBtnAbrir().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    abrir();
+                } catch (IOException ex) {
+                    Logger.getLogger(PrincipalPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        view.getBtnSalvar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    salvar();
+                } catch (Exception ex) {
+                    Logger.getLogger(PrincipalPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        });
     }
 
     public void analiseLexica() {
@@ -135,6 +162,44 @@ public class PrincipalPresenter {
             for (TokenModel token : analisadorLexico.getTokens()) {
                 tblModel.addRow(new Object[]{token.getLinha(), token.getID(), token.getNome(), token.getLexema()});
             }
+        }
+    }
+
+    public void salvar() throws Exception {
+
+        JFileChooser salvar = new JFileChooser();
+        int i = salvar.showSaveDialog(view);
+        File arquivo;
+        if (i == JFileChooser.APPROVE_OPTION) {
+            arquivo = salvar.getSelectedFile();
+            FileWriter arq = new FileWriter(arquivo + ".ptl");
+            view.getPaneCodigo().setTitleAt(0, arquivo.getName());
+            arq.write(view.getjTextPaneCodigo().getText());
+            arq.close();
+        }
+    }
+
+    public void abrir() throws FileNotFoundException, IOException {
+        JFileChooser abrir = new JFileChooser();
+        int i = abrir.showOpenDialog(view);
+        File arquivo;
+        if (i == JFileChooser.APPROVE_OPTION) {
+            arquivo = abrir.getSelectedFile();
+            FileReader ler = new FileReader(arquivo);
+            view.getPaneCodigo().setTitleAt(0, arquivo.getName());
+            BufferedReader p;
+            p = new BufferedReader(ler);
+            String linha= "";
+            String AUX[]=null;
+            while ((linha = p.readLine()) != null) {
+                AUX= linha.split("\n");
+              
+               
+            }
+            for (String AUX1 : AUX) {
+                view.getjTextPaneCodigo().setText(AUX1);
+            }  
+           
         }
     }
 

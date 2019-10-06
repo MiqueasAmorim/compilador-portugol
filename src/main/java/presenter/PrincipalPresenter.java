@@ -153,11 +153,15 @@ public class PrincipalPresenter {
             }
             DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
             tblModelOutput.setNumRows(0);
-            tblModelOutput.addRow(new Object[]{"<html><font color=\"green\"><b>Compilado com sucesso!</b></font></html>"});
+            if (analisadorLexico.getErros().isEmpty()) {
+                tblModelOutput.addRow(new Object[]{"<html><font color=\"green\"><b>Compilado com sucesso!</b></font></html>"});
+            } else {
+                for (TokenModel erro : analisadorLexico.getErros()) {
+                    tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>Caractere ou palavra inválida " + erro.getLexema() + " na linha " + erro.getLinha() + " e coluna " + erro.getColuna() + "</b></font></html>"});
+                }
+            }
         } catch (RuntimeException | IOException ex) {
-            DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
-            tblModelOutput.setNumRows(0);
-            tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>" + ex.getMessage() + "</b></font></html>"});
+
         } finally {
             DefaultTableModel tblModel = (DefaultTableModel) view.getTblTokens().getModel();
             tblModel.setNumRows(0);

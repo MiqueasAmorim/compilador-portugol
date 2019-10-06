@@ -787,7 +787,7 @@ private TokenModel createToken(int id, Token nome) {
             }
           case 60: break;
           case 2: 
-            { throw new RuntimeException("Caractere inválido " + yytext() + " na linha " + (yyline+1) + ", coluna " +yycolumn);
+            { return createToken(-1, Token.ERRO);
             }
           case 61: break;
           case 3: 

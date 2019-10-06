@@ -39,6 +39,9 @@ public enum Token {
     OP_E, OP_OU, OP_NAO,
     
     // Padroes
-    IDENTIFICADOR, INTEIRO, REAL, CARACTERE, STRING, COMENTARIO
+    IDENTIFICADOR, INTEIRO, REAL, CARACTERE, STRING, COMENTARIO,
+    
+    // Inclui todos caracteres invalidos e lexemas malformados
+    ERRO
     
 }

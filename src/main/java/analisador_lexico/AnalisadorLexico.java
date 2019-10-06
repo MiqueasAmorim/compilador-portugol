@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import model.Token;
 
 /**
  *
@@ -22,10 +23,12 @@ import java.util.ArrayList;
 public class AnalisadorLexico {
     
     ArrayList<TokenModel> tokens;
+    ArrayList<TokenModel> erros;
     
     public AnalisadorLexico() throws FileNotFoundException, IOException {
 
         tokens = new ArrayList<>();
+        erros = new ArrayList<>();
         
         //String rootPath = Paths.get("").toAbsolutePath(). toString();
         //String subPath = "/src/main/java/analisador_lexico/";
@@ -37,6 +40,7 @@ public class AnalisadorLexico {
     public void analisar(String codigo) throws FileNotFoundException, IOException {
         //Lexer lexical = new Lexer(new FileReader(sourceCode));
         this.tokens.clear();
+        this.erros.clear();
         File arquivoTemp = new File("semtitulo.ptl");
         FileWriter fw = new FileWriter(arquivoTemp);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -49,7 +53,10 @@ public class AnalisadorLexico {
         TokenModel token;
 
         while ((token = lexical.yylex()) != null) {
-            this.tokens.add(token);
+            if (!token.getNome().equals(Token.ERRO))
+                this.tokens.add(token);
+            else
+                this.erros.add(token);
             //System.out.println("<" + token.getID() + ", " + token.getNome() + ", " + token.getLexema() + "> (" + token.getLinha() + " - " + token.getColuna() + ")");
         }
         
@@ -58,6 +65,9 @@ public class AnalisadorLexico {
     public ArrayList<TokenModel> getTokens() {
         return tokens;
     }
-    
+
+    public ArrayList<TokenModel> getErros() {
+        return erros;
+    }
     
 }

@@ -40,7 +40,7 @@ public enum Token {
     
     // Padroes
     IDENTIFICADOR, INTEIRO, REAL, CARACTERE, STRING, COMENTARIO,
-    
+        
     // Inclui todos caracteres invalidos e lexemas malformados
     ERRO
     

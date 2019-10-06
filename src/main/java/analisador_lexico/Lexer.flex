@@ -103,7 +103,12 @@ comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*
 
 {inteiro} { id+=1; return createToken(id, Token.INTEIRO); }
 {real} { id+=1; return createToken(id, Token.REAL); }
-{id} { id+=1; return createToken(id, Token.IDENTIFICADOR); }
+{id} {
+    if (yylength() > 10) 
+        return createToken(-1, Token.ERRO); 
+    id+=1; 
+    return createToken(id, Token.IDENTIFICADOR);        
+}
 {caractere} {id+=1; return createToken(id, Token.CARACTERE); }
 {string} {id+=1; return createToken(id, Token.STRING);}
 {comentario} {id+=1; return createToken(id, Token.COMENTARIO);}

@@ -783,7 +783,10 @@ private TokenModel createToken(int id, Token nome) {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { id+=1; return createToken(id, Token.IDENTIFICADOR);
+            { if (yylength() > 10) 
+        return createToken(-1, Token.ERRO); 
+    id+=1; 
+    return createToken(id, Token.IDENTIFICADOR);
             }
           case 60: break;
           case 2: 

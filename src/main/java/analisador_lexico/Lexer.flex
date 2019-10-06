@@ -17,7 +17,7 @@ import model.TokenModel;
 private int id = 0;
 
 private TokenModel createToken(int id, Token nome) {
-    return new TokenModel(id, nome, yytext(), yyline, yycolumn);
+    return new TokenModel(id, nome, yytext(), yyline+1, yycolumn);
 }
 
 %}

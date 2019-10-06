@@ -108,5 +108,5 @@ comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*
 {string} {id+=1; return createToken(id, Token.STRING);}
 {comentario} {id+=1; return createToken(id, Token.COMENTARIO);}
 
-. { throw new RuntimeException("Caractere inválido " + yytext() + " na linha " + yyline + ", coluna " +yycolumn); }
+. { throw new RuntimeException("Caractere inválido " + yytext() + " na linha " + (yyline+1) + ", coluna " +yycolumn); }
 

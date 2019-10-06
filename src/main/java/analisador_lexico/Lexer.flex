@@ -108,5 +108,7 @@ comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*
 {string} {id+=1; return createToken(id, Token.STRING);}
 {comentario} {id+=1; return createToken(id, Token.COMENTARIO);}
 
+[0-9]+ \. { return createToken(-1, Token.ERRO); }
+\. [0-9]+ { return createToken(-1, Token.ERRO); }
 . { return createToken(-1, Token.ERRO); }
 

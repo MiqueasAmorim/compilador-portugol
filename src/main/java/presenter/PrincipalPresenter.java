@@ -6,6 +6,8 @@
 package presenter;
 
 import analisador_lexico.AnalisadorLexico;
+import analisador_sintatico.AnalisadorSintatico;
+import apoio.RetornaErro;
 import editor.KeywordStyledDocument;
 import editor.NumeredBorder;
 import java.awt.Color;
@@ -24,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -32,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import model.ErrorModel;
 import model.TokenModel;
 import view.PrincipalView;
 
@@ -43,6 +47,7 @@ public class PrincipalPresenter {
 
     private PrincipalView view;
     private AnalisadorLexico analisadorLexico;
+    private AnalisadorSintatico analisadorSintatico;
     private Timer timer = null;
     private KeyListener keyListenerTextPane = null;
     private boolean alteracoes = false;
@@ -67,6 +72,7 @@ public class PrincipalPresenter {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     analiseLexica();
+                    analiseSintatica();
                 }
             });
 
@@ -168,6 +174,18 @@ public class PrincipalPresenter {
             for (TokenModel token : analisadorLexico.getTokens()) {
                 tblModel.addRow(new Object[]{token.getLinha(), token.getID(), token.getNome(), token.getLexema()});
             }
+        }
+    }
+
+    public void analiseSintatica() {
+        analisadorSintatico = new AnalisadorSintatico(analisadorLexico.getTokens());
+        ArrayList<ErrorModel> erros = analisadorSintatico.run();
+        if (!erros.isEmpty()) {
+            for (ErrorModel erro : erros) {
+                System.err.println("[ERRO SINTÁTICO] -> Linha " + erro.getLinha() + " - " + RetornaErro.getError(erro) + "");
+            }
+        } else {
+            System.out.println("Nenhum erro sintático encontrado.");
         }
     }
 

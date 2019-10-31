@@ -25,7 +25,7 @@ private TokenModel createToken(int id, Token nome) {
 caractere = '[^\'\\\n\r\t]'
 string = '[^\'\\]*'
 brancos = [\n| |\t|\r]
-id = [_A-Za-z]*
+id = [_A-Za-z][[_A-Za-z]|[0-9]]*
 inteiro = 0|[1-9][0-9]*
 real = [0-9]+ \. [0-9]+
 comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*

@@ -22,24 +22,37 @@ public class DeclVarHandler extends AbstractHandler {
     @Override
     public boolean handle() {
         if (nextToken()) {
-            if (new VariavelHandler(tokens).handle() && new ConjuntoIdsHandler(tokens).handle()) {
-                removeToken();
+            if (new VariavelHandler(tokens).handle()) {
+
                 if (nextToken()) {
                     if (currentToken == Token.DOIS_PONTOS) {
                         removeToken();
                         if (new TipoHandler(tokens).handle()) {
-                            removeToken();
-                            if (currentToken == Token.PONTO_VIRGULA) {
-                                return true;
+                            if (nextToken()) {
+                                if (currentToken == Token.PONTO_VIRGULA) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            } else {
+                                return false;
                             }
+                        } else {
+                            return false;
                         }
+                    } else {
+                        return false;
                     }
+                } else {
+                    return false;
                 }
+            } else {
+                return false;
             }
         } else {
             return false;
         }
-        return true;
+
     }
-    
+
 }

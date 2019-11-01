@@ -13,25 +13,22 @@ import model.TokenModel;
  *
  * @author Miqueas
  */
-public class ConjuntoIdsHandler extends AbstractHandler {
+public class DeclVarList2Handler extends AbstractHandler {
 
-    public ConjuntoIdsHandler(ArrayList<TokenModel> tokens) {
+    public DeclVarList2Handler(ArrayList<TokenModel> tokens) {
         super(tokens);
     }
 
     @Override
     public boolean handle() {
         if (nextToken()) {
-            if (currentToken == Token.VIRGULA) {
-                removeToken();
-                return (new VariavelHandler(tokens).handle() && new ConjuntoIdsHandler(tokens).handle());
-            } else if (currentToken == Token.DOIS_PONTOS) {
+            if (currentToken == Token.PC_CONSTANTE || currentToken == Token.PC_INICIO) {
                 return true;
             }
+            return (new DeclVarHandler(tokens).handle() && new DeclVarList2Handler(tokens).handle());
         } else {
             return false;
         }
-        return true;
     }
     
 }

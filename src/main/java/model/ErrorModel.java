@@ -10,14 +10,18 @@ package model;
  * @author Miqueas
  */
 public class ErrorModel {
-    private int codigo;
-    private String lexema;
-    private int linha;
+    private static ErrorModel instance;
+    private int codigo = 0;
+    private String lexema = null;
+    private int linha = 0;
 
-    public ErrorModel(int codigo, String lexema, int linha) {
-        this.codigo = codigo;
-        this.lexema = lexema;
-        this.linha = linha;
+    private ErrorModel() {}
+    
+    public static ErrorModel getInstance() {
+        if (instance == null) {
+            instance = new ErrorModel();
+        }
+        return instance;
     }
 
     public int getCodigo() {

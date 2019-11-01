@@ -23,7 +23,7 @@ public class DeclVarListHandler extends AbstractHandler {
     @Override
     public boolean handle() {
         if (nextToken()) {
-            return (new DeclVarHandler(tokens).handle() && new DeclVarListHandler(tokens).handle());
+            return (new DeclVarHandler(tokens).handle() && new DeclVarList2Handler(tokens).handle());
         } else {
             return false;
         }  

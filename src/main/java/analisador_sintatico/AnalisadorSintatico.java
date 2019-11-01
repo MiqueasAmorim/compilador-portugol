@@ -5,7 +5,7 @@
  */
 package analisador_sintatico;
 
-import analisador_sintatico.handlers.DeclVarHandler;
+import analisador_sintatico.handlers.DeclaracaoVariavelHandler;
 import model.ErrorModel;
 import model.TokenModel;
 import java.util.ArrayList;
@@ -17,12 +17,12 @@ import java.util.ArrayList;
 public class AnalisadorSintatico{
     
     private ArrayList<TokenModel> tokens;
-    private DeclVarHandler handler;
+    private DeclaracaoVariavelHandler handler;
     private ArrayList<ErrorModel> errorList;
     
     public AnalisadorSintatico(ArrayList<TokenModel> tokens) {
         this.tokens = tokens;
-        this.handler = new DeclVarHandler(tokens);
+        this.handler = new DeclaracaoVariavelHandler(tokens);
         this.errorList = new ArrayList();      
     }
     
@@ -31,11 +31,12 @@ public class AnalisadorSintatico{
         //Iterator<TokenModel> it = tokens.iterator();
         //while(it.hasNext()){
             if(!handler.handle()){
-                int errorCode = handler.getErrorCode();
-                String lexema = handler.getCurrentLexema();
-                int linha = handler.getCurrentLine();
-                ErrorModel error = new ErrorModel(errorCode, lexema, linha);
-                errorList.add(error);
+                
+                //int errorCode = handler.getErrorCode();
+                //String lexema = handler.getCurrentLexema();
+                //int linha = handler.getCurrentLine();
+                //ErrorModel error = new ErrorModel(errorCode, lexema, linha);
+                //errorList.add(error);
                 //break;
                 /*
                 recuperaErro();

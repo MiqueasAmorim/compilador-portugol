@@ -72,7 +72,12 @@ public class PrincipalPresenter {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     analiseLexica();
-                    analiseSintatica();
+                    if (analisadorLexico.getErros().isEmpty()) {
+                        analiseSintatica();
+                    } else {
+                        DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
+                        tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>Não foi possível realizar a análise sintática devido a erro léxico.</b></font></html>"});
+                    }
                 }
             });
 
@@ -97,6 +102,12 @@ public class PrincipalPresenter {
                                             if (alteracoes) {
                                                 alteracoes = false;
                                                 analiseLexica();
+                                                if (analisadorLexico.getErros().isEmpty()) {
+                                                    analiseSintatica();
+                                                } else {
+                                                    DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
+                                                    tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>Não foi possível realizar a análise sintática devido a erro léxico.</b></font></html>"});
+                                                }
                                             }
                                         }
                                     };
@@ -160,10 +171,10 @@ public class PrincipalPresenter {
             DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
             tblModelOutput.setNumRows(0);
             if (analisadorLexico.getErros().isEmpty()) {
-                tblModelOutput.addRow(new Object[]{"<html><font color=\"green\"><b>Compilado com sucesso!</b></font></html>"});
+                tblModelOutput.addRow(new Object[]{"<html><font color=\"green\"><b>Nenhum erro léxico.</b></font></html>"});
             } else {
                 for (TokenModel erro : analisadorLexico.getErros()) {
-                    tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>Caractere ou palavra inválida " + erro.getLexema() + " na linha " + erro.getLinha() + " e coluna " + erro.getColuna() + "</b></font></html>"});
+                    tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>[ERRO LÉXICO] => Caractere ou palavra inválida " + erro.getLexema() + " na linha " + erro.getLinha() + " e coluna " + erro.getColuna() + "</b></font></html>"});
                 }
             }
         } catch (RuntimeException | IOException ex) {
@@ -179,13 +190,14 @@ public class PrincipalPresenter {
 
     public void analiseSintatica() {
         analisadorSintatico = new AnalisadorSintatico(analisadorLexico.getTokens());
+        DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
         if (!analisadorSintatico.run()) {
-            System.err.println("[ERRO SINTÁTICO] -> Linha " + ErrorModel.getInstance().getLinha() + " - " + RetornaErro.getError(ErrorModel.getInstance()) + "");
+            //System.err.println("[ERRO SINTÁTICO] -> Linha " + ErrorModel.getInstance().getLinha() + " - " + RetornaErro.getError(ErrorModel.getInstance()) + "");
+            tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>[ERRO SINTÁTICO] => " + RetornaErro.getError(ErrorModel.getInstance()) + " na linha " + ErrorModel.getInstance().getLinha() + "</b></font></html>"});
         } else {
-            System.out.println("Nenhum erro sintático encontrado.");
+            tblModelOutput.addRow(new Object[]{"<html><font color=\"green\"><b>Nenhum erro sintático.</b></font></html>"});
         }
-        
-        
+
 //        ArrayList<ErrorModel> erros = analisadorSintatico.run();
 //        if (!erros.isEmpty()) {
 //            for (ErrorModel erro : erros) {

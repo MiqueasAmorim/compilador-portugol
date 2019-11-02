@@ -22,19 +22,29 @@ public class RetornaErro {
 
         switch (error.getCodigo()) {
             case 1:
-                return "Esperado um tipo (inteiro, real, string, char ou booleano), mas nenhum token foi encontrado.";
+                return "Esperado \"tipo\", mas \"fim de arquivo\" encontrado.";
             case 2:
-                return "Esperado um tipo (inteiro, real, string, char ou booleano), mas foi encontrado <" + error.getLexema() + ">.";
+                return "Esperado \"tipo\", mas \"" + error.getLexema() + "\" encontrado.";
             case 3:
-                return "Esperado token variavel, mas nenhum token foi encontrado.";
+                return "Esperado \"VARIAVEL\", mas \"fim de arquivo\" encontrado.";
             case 4:
-                return "Esperado token variavel, mas foi encontrado <" + error.getLexema() + ">.";
+                return "Esperado \"VARIAVEL\", mas \"" + error.getLexema() + "\" encontrado.";
             case 5:
-                return "Esperado um identificador, mas nenhum token foi encontrado.";
+                return "Esperado \"identificador\", mas \"fim de arquivo\" encontrado.";
             case 6:
-                return "Esperado um identificador, mas foi encontrado <" + error.getLexema() + ">.";
+                return "Esperado \"identificador\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 7:
+                return "Esperado \":\", mas \"fim de arquivo\" encontrado.";
+            case 8:
+                return "Esperado \":\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 9:
+                return "Esperado \";\", mas \"fim de arquivo\" encontrado.";
+            case 10:
+                return "Esperado \";\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 11:
+                return "Esperado \"INICIO\", mas \"fim de arquivo\" encontrado.";
             default:
-                return "";
+                return "Erro não tratado";
         }
 
     }

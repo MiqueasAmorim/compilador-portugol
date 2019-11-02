@@ -26,11 +26,11 @@ public class VariavelHandler extends AbstractHandler {
                 removeToken();
                 return true;
             } else {
-                errorCode = 6;
+                setCodError(6);
                 return false;
             }
         } else {
-            errorCode = 5;
+            setCodError(5);
             return false;
         }
     }

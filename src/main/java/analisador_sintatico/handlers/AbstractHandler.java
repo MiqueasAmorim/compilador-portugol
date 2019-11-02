@@ -8,6 +8,7 @@ package analisador_sintatico.handlers;
 import model.TokenModel;
 import model.Token;
 import java.util.ArrayList;
+import model.ErrorModel;
 
 /**
  *
@@ -18,7 +19,7 @@ public abstract class AbstractHandler implements IHandler{
     protected static ArrayList<TokenModel> tokens;
     protected ArrayList<Token> terminais;
     protected static Token currentToken;
-    protected static int errorCode = 0;
+    //protected static int errorCode = 0;
     protected static int linha = 1;
 
     public AbstractHandler(ArrayList<TokenModel> tokens) {
@@ -65,10 +66,16 @@ public abstract class AbstractHandler implements IHandler{
     public int getNumTokens(){
         return tokens.size();
     }
-
-    public int getErrorCode() {
-        return errorCode;
+    
+    public void setCodError(int cod) {
+        ErrorModel.getInstance().setCodigo(cod);
+        ErrorModel.getInstance().setLexema(getCurrentLexema());
+        ErrorModel.getInstance().setLinha(getCurrentLine());
     }
+
+//    public int getErrorCode() {
+//        return errorCode;
+//    }
    
     
 }

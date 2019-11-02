@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import model.ErrorModel;
 import model.Token;
 import model.TokenModel;
 
@@ -21,10 +22,11 @@ public class DeclVarHandler extends AbstractHandler {
 
     @Override
     public boolean handle() {
-        if (nextToken()) {
+//        if (nextToken()) {
             if (new VariavelHandler(tokens).handle()) {
-                if (nextToken()) {
+//                if (nextToken()) {
                     if (new ConjuntoIdsHandler(tokens).handle()) {
+                    //new ConjuntoIdsHandler(tokens).handle();
                         if (nextToken()) {
                             if (currentToken == Token.DOIS_PONTOS) {
                                 removeToken();
@@ -34,32 +36,37 @@ public class DeclVarHandler extends AbstractHandler {
                                             removeToken();
                                             return true;
                                         } else {
+                                            setCodError(10); // Esperado ";", mas outra coisa encontrada.
                                             return false;
                                         }
                                     } else {
+                                        setCodError(9);
+                                        // Esperado ";", mas encontrou "fim de arquivo"
                                         return false;
                                     }
                                 } else {
                                     return false;
                                 }
                             } else {
+                                setCodError(linha); // Esperado ":", mas encontrado outra coisa
                                 return false;
                             }
                         } else {
+                            setCodError(7);  // Esperado dois pontos, mas encontrou nenhum token
                             return false;
                         }
                     } else {
                         return false;
                     }
-                } else {
-                    return false;
-                }
+//                } else {
+//                    return false;
+//                }
             } else {
                 return false;
             }
-        } else {
-            return false;
-        }
+//        } else {   
+//            return false;
+//        }
 
     }
 

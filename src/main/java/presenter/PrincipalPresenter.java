@@ -179,14 +179,21 @@ public class PrincipalPresenter {
 
     public void analiseSintatica() {
         analisadorSintatico = new AnalisadorSintatico(analisadorLexico.getTokens());
-        ArrayList<ErrorModel> erros = analisadorSintatico.run();
-        if (!erros.isEmpty()) {
-            for (ErrorModel erro : erros) {
-                System.err.println("[ERRO SINTÁTICO] -> Linha " + erro.getLinha() + " - " + RetornaErro.getError(erro) + "");
-            }
+        if (!analisadorSintatico.run()) {
+            System.err.println("[ERRO SINTÁTICO] -> Linha " + ErrorModel.getInstance().getLinha() + " - " + RetornaErro.getError(ErrorModel.getInstance()) + "");
         } else {
             System.out.println("Nenhum erro sintático encontrado.");
         }
+        
+        
+//        ArrayList<ErrorModel> erros = analisadorSintatico.run();
+//        if (!erros.isEmpty()) {
+//            for (ErrorModel erro : erros) {
+//                System.err.println("[ERRO SINTÁTICO] -> Linha " + erro.getLinha() + " - " + RetornaErro.getError(erro) + "");
+//            }
+//        } else {
+//            System.out.println("Nenhum erro sintático encontrado.");
+//        }
     }
 
     public void salvar() throws Exception {

@@ -26,11 +26,12 @@ public class AnalisadorSintatico{
         this.errorList = new ArrayList();      
     }
     
-    public ArrayList<ErrorModel> run(){
-        
+    public boolean run(){
+        ErrorModel.getInstance().limpar();
+        return handler.handle();
         //Iterator<TokenModel> it = tokens.iterator();
         //while(it.hasNext()){
-            if(!handler.handle()){
+            //if(!handler.handle()){
                 
                 //int errorCode = handler.getErrorCode();
                 //String lexema = handler.getCurrentLexema();
@@ -42,10 +43,10 @@ public class AnalisadorSintatico{
                 recuperaErro();
                 this.handler = new Single_input(tokens);
                 */
-            }
+            //}
         //}
         
-        return errorList;
+        //return errorList;
     }
     
 }

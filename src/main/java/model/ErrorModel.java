@@ -23,6 +23,12 @@ public class ErrorModel {
         }
         return instance;
     }
+    
+    public void limpar() {
+        codigo = 0;
+        lexema = null;
+        linha = 0;
+    }
 
     public int getCodigo() {
         return codigo;

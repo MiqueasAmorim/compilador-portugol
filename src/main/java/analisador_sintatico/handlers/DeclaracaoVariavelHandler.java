@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import model.ErrorModel;
 import model.Token;
 import model.TokenModel;
 
@@ -26,11 +27,11 @@ public class DeclaracaoVariavelHandler extends AbstractHandler {
                 removeToken();
                 return new DeclVarListHandler(tokens).handle();        
             } else {
-                this.errorCode = 4;
+                setCodError(4);
                 return false;
             }
         } else {
-            this.errorCode = 3;
+            setCodError(3);
             return false;
         }
  

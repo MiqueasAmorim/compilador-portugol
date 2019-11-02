@@ -21,16 +21,17 @@ public class ConjuntoIdsHandler extends AbstractHandler {
 
     @Override
     public boolean handle() {
-        if (nextToken()) {
+//        if (nextToken()) {
+            nextToken();
             if (currentToken == Token.VIRGULA) {
                 removeToken();
                 return (new VariavelHandler(tokens).handle() && new ConjuntoIdsHandler(tokens).handle());
             } else if (currentToken == Token.DOIS_PONTOS) {
                 return true;
             }
-        } else {
-            return false;
-        }
+//        } else {
+//            return false;
+//        }
         return true;
     }
     

@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import model.ErrorModel;
 import model.Token;
 import model.TokenModel;
 
@@ -27,6 +28,7 @@ public class DeclVarList2Handler extends AbstractHandler {
             }
             return (new DeclVarHandler(tokens).handle() && new DeclVarList2Handler(tokens).handle());
         } else {
+            setCodError(11);
             return false;
         }
     }

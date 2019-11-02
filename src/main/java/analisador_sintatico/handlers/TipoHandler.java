@@ -25,11 +25,11 @@ public class TipoHandler extends AbstractHandler {
             if (currentToken == Token.PC_INTEIRO || currentToken == Token.PC_REAL || currentToken == Token.PC_CHAR || currentToken == Token.PC_STRING || currentToken == Token.PC_BOOLEANO) {    
                 removeToken();
             } else {
-                this.errorCode = 2; // Token errado
+                setCodError(2); // Token errado
                 return false;
             }   
         } else {
-            this.errorCode = 1; // Esperado token Tipo, mas nenhum token foi encontrado
+            setCodError(1);// Esperado token Tipo, mas nenhum token foi encontrado
             return false;
         }
         return true;

@@ -7,6 +7,7 @@ package analisador_sintatico;
 
 import analisador_sintatico.handlers.DeclaracaoVariavelHandler;
 import analisador_sintatico.handlers.ExprHandler;
+import analisador_sintatico.handlers.InstHandler;
 import model.ErrorModel;
 import model.TokenModel;
 import java.util.ArrayList;
@@ -18,12 +19,12 @@ import java.util.ArrayList;
 public class AnalisadorSintatico{
     
     private ArrayList<TokenModel> tokens;
-    private ExprHandler handler;
+    private InstHandler handler;
     private ArrayList<ErrorModel> errorList;
     
     public AnalisadorSintatico(ArrayList<TokenModel> tokens) {
         this.tokens = tokens;
-        this.handler = new ExprHandler(tokens);
+        this.handler = new InstHandler(tokens);
         this.errorList = new ArrayList();      
     }
     

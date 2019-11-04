@@ -44,6 +44,8 @@ comentario = "{"[^]*"}" | "(*"[^]*"*)" | "//".*
 "'" { id+=1; return createToken(id, Token.ASPAS_SIMPLES); }
 "(" { id+=1; return createToken(id, Token.ABRE_PARENTESES); }
 ")" { id+=1; return createToken(id, Token.FECHA_PARENTESES); }
+"[" { id+=1; return createToken(id, Token.ABRE_COLCHETES); }
+"]" { id+=1; return createToken(id, Token.FECHA_COLCHETES); }
 
 /* Operadores aritméticos */
 "+" { id+=1; return createToken(id, Token.OP_ADICAO); }

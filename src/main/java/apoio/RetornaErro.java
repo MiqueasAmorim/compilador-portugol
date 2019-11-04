@@ -51,6 +51,8 @@ public class RetornaErro {
                 return "Esperada \"número\" ou \"string\", mas \"" + error.getLexema() + "\" encontrado.";
             case 15:
                 return "Esperado \"número\" ou \"string\", mas \"fim de arquivo\" encontrado.";
+            case 16:
+                return "Instrução mal formada";
             default:
                 return "Erro não tratado";
         }

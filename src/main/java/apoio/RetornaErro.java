@@ -43,6 +43,14 @@ public class RetornaErro {
                 return "Esperado \";\", mas \"" + error.getLexema() + "\" encontrado.";
             case 11:
                 return "Esperado \"INICIO\", mas \"fim de arquivo\" encontrado.";
+            case 12:
+                return "Esperado \"OU\" ou \"E\", mas \"fim de arquivo\" encontrado.";
+            case 13:
+                return "Esperado \"OU\" ou \"E\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 14:
+                return "Esperada \"número\" ou \"string\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 15:
+                return "Esperado \"número\" ou \"string\", mas \"fim de arquivo\" encontrado.";
             default:
                 return "Erro não tratado";
         }

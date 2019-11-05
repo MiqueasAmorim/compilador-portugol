@@ -53,10 +53,33 @@ public class RetornaErro {
                 return "Esperado \"número\" ou \"string\", mas \"fim de arquivo\" encontrado.";
             case 16:
                 return "Instrução mal formada";
+            case 200:
+                return "Esperado \"costante\", mas \"fim de arquivo\" encontrado.";
+            case 201:
+                return "Esperado \"constante\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 202:
+                return "Esperado um \"indentificador\",mas \"fim de arquivo\" encontrado.";
+            case 203:
+                return "Esperado \"=\",mas \"" + error.getLexema() + "\" encontrado.";
+            case 204:
+                return "Esperado \"valor\",mas \"" + error.getLexema() + "\" encontrado.";
+            case 205:
+                return "Esperado \"= ou :\",mas \"" + error.getLexema() + "\" encontrado.";
+            case 206:
+                return "Esperado \"=\",mas \"fim de arquivo\" encontrado.";
+            case 207:
+                return "Esperado um \"indentificador\",mas \"" + error.getLexema() + "\" encontrado.";
+            case 208:
+                return "Esperado um \"valor\",mas \"fim de arquivo\" encontrado.";
+            case 209:
+                return "Esperado uma \"String\",mas \"fim de arquivo\" encontrado.";
+            case 210:
+                return "Esperado um \"caractere\",mas \"" + error.getLexema() + "\" encontrado.";
             default:
                 return "Erro não tratado";
-        }
-
+        
     }
+
+}
 
 }

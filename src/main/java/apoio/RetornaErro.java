@@ -53,6 +53,18 @@ public class RetornaErro {
                 return "Esperado \"número\" ou \"string\", mas \"fim de arquivo\" encontrado.";
             case 16:
                 return "Instrução mal formada";
+            case 17:
+                return "Esperado \"instrução\", mas \"fim de arquivo\" encontrado.";
+            case 18:
+                return "Esperando \"INICIO\", mas \"fim de arquivo\" encontrado.";
+            case 19:
+                return "Esperada \"INICIO\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 20:
+                return "Esperando \"FIM\", mas \"fim de arquivo\" encontrado.";
+            case 21:
+                return "Esperada \"FIM\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 22:
+                return "Esperando \";\", mas \"fim de arquivo\" encontrado.";
             case 200:
                 return "Esperado \"costante\", mas \"fim de arquivo\" encontrado.";
             case 201:

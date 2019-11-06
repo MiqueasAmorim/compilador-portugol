@@ -5,10 +5,12 @@
  */
 package analisador_sintatico;
 
+import analisador_sintatico.handlers.BlocoHandler;
 import analisador_sintatico.handlers.DeclConstanteHandler;
 import analisador_sintatico.handlers.DeclaracaoVariavelHandler;
 import analisador_sintatico.handlers.ExprHandler;
 import analisador_sintatico.handlers.InstHandler;
+import analisador_sintatico.handlers.InstrucoesHandler;
 import model.ErrorModel;
 import model.TokenModel;
 import java.util.ArrayList;
@@ -20,12 +22,12 @@ import java.util.ArrayList;
 public class AnalisadorSintatico{
     
     private ArrayList<TokenModel> tokens;
-    private DeclConstanteHandler handler;
+    private BlocoHandler handler;
     private ArrayList<ErrorModel> errorList;
     
     public AnalisadorSintatico(ArrayList<TokenModel> tokens) {
         this.tokens = tokens;
-        this.handler = new DeclConstanteHandler(tokens);
+        this.handler = new BlocoHandler(tokens);
         this.errorList = new ArrayList();      
     }
     

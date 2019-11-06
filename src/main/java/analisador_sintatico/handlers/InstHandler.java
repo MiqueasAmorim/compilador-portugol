@@ -22,6 +22,10 @@ public class InstHandler extends AbstractHandler {
     @Override
     public boolean handle() {
         nextToken();
+        if (currentToken == null) {
+            setCodError(17);
+            return false;
+        }
         if (new VariavelHandler(tokens).handle()) {
             nextToken();
             if (currentToken == Token.OP_ATRIBUICAO) {

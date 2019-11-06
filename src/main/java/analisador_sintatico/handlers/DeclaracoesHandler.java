@@ -7,6 +7,7 @@ package analisador_sintatico.handlers;
 
 import static analisador_sintatico.handlers.AbstractHandler.tokens;
 import java.util.ArrayList;
+import model.Token;
 import model.TokenModel;
 
 /**
@@ -21,7 +22,22 @@ public class DeclaracoesHandler extends AbstractHandler {
 
     @Override
     public boolean handle() {
-        return (new DeclConstanteHandler(tokens).handle() && new DeclaracaoVariavelHandler(tokens).handle());
+        nextToken();
+        if (currentToken == Token.PC_CONSTANTE) {
+            if (new DeclConstanteHandler(tokens).handle()) {
+                nextToken();
+                if (currentToken == Token.PC_VARIAVEL) {
+                    return new DeclaracaoVariavelHandler(tokens).handle();
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (currentToken == Token.PC_VARIAVEL) {
+            return new DeclaracaoVariavelHandler(tokens).handle();
+        }
+        return true;
     }
     
 }

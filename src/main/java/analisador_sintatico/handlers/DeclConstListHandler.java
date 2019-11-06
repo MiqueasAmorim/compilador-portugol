@@ -24,7 +24,7 @@ public class DeclConstListHandler extends AbstractHandler {
         if (new DeclConstHandler(tokens).handle()) {
             return new DeclConsList2Handler(tokens).handle();
         }else{
-            setCodError(202);
+            //setCodError(202);
             return false;
         }
 

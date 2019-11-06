@@ -27,12 +27,13 @@ public class DeclConstanteHandler extends AbstractHandler {
             if (currentToken == Token.PC_CONSTANTE) {
                 removeToken();
                 return new DeclConstListHandler(tokens).handle();
-            } else {
+            } 
+            else {
                 setCodError(201);
                 return false;
             }
         } else {
-            setCodError(202);
+            setCodError(200);
             return false;
         }
     }

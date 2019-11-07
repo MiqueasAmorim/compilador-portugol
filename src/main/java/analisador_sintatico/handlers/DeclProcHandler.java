@@ -36,16 +36,31 @@ public class DeclProcHandler extends AbstractHandler {
                                         if (nextToken()) {
                                             if (currentToken == Token.PONTO_VIRGULA) {
                                                 removeToken();
-                                                if (new DeclConstanteHandler(tokens).handle()) {
-                                                    nextToken();
+                                                nextToken();
+                                                if (currentToken == Token.PC_CONSTANTE) {
+                                                    if (new DeclConstanteHandler(tokens).handle()) {
+                                                        nextToken();
+                                                        if (currentToken == Token.PC_VARIAVEL) {
+                                                            if (new DeclaracaoVariavelHandler(tokens).handle()) {
+                                                                return (new BlocoHandler(tokens).handle());
+                                                            } else {
+                                                                return false;
+                                                            }
+                                                        } else {
+                                                            return new BlocoHandler(tokens).handle();
+                                                        }
+                                                    } else {
+                                                        return false;
+                                                    }
+                                                }
+                                                if (currentToken == Token.PC_VARIAVEL) {
                                                     if (new DeclaracaoVariavelHandler(tokens).handle()) {
                                                         return (new BlocoHandler(tokens).handle());
                                                     } else {
                                                         return false;
                                                     }
-                                                } else {
-                                                    return false;
                                                 }
+                                                return (new BlocoHandler(tokens).handle());
                                             } else {
                                                 setCodError(10); //Esperado ";" , mas encontrou outra cisa.
                                                 return false;
@@ -96,16 +111,33 @@ public class DeclProcHandler extends AbstractHandler {
                                                     if (nextToken()) {
                                                         if (currentToken == Token.PONTO_VIRGULA) {
                                                             removeToken();
-                                                            if (new DeclConstanteHandler(tokens).handle()) {
-                                                                nextToken();
+                                                            nextToken();
+                                                            if (currentToken == Token.PC_CONSTANTE) {
+                                                                if (new DeclConstanteHandler(tokens).handle()) {
+                                                                    nextToken();
+                                                                    if (currentToken == Token.PC_VARIAVEL) {
+                                                                        if (new DeclaracaoVariavelHandler(tokens).handle()) {
+                                                                            return (new BlocoHandler(tokens).handle());
+                                                                        } else {
+                                                                            return false;
+                                                                        }
+                                                                    } else {
+                                                                        return (new BlocoHandler(tokens).handle());
+                                                                    }
+                                                                } else {
+                                                                    return false;
+                                                                }
+                                                            }
+
+                                                            if (currentToken == Token.PC_VARIAVEL) {
                                                                 if (new DeclaracaoVariavelHandler(tokens).handle()) {
                                                                     return (new BlocoHandler(tokens).handle());
                                                                 } else {
                                                                     return false;
                                                                 }
-                                                            } else {
-                                                                return false;
                                                             }
+                                                            
+                                                            return (new BlocoHandler(tokens).handle());
                                                         } else {
                                                             setCodError(10); //Esperado ";" , mas encontrou outra cisa.
                                                             return false;

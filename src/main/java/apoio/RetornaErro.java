@@ -93,11 +93,26 @@ public class RetornaErro {
                 return "Esperado uma \"string\",mas \"fim de arquivo\" encontrado.";
             case 210:
                 return "Esperado um \"caractere\",mas \"" + error.getLexema() + "\" encontrado.";
+            case 100:
+                return "Esperado \"PROCEDIMENTO\" ou \"FUNÇÃO\", mas mas \"fim de arquivo\" encontrado.";
+            case 101:
+                return "Esperado \"PROCEDIMENTO\", mas \"fim de arquivo\" encontrado.";
+            case 102:
+                return "Esperado \"(\", mas \"fim de arquivo\" encontrado.";
+            case 103:
+                return "Esperado \"(\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 104:
+                return "Esperado \")\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 105:
+                return "Esperado um parametro, mas \"" + error.getLexema() + "\" encontrado.";
+            case 106:
+                return "Esperado \"FUNÇÃO\", mas \"" + error.getLexema() + "\" encontrado.";
+                
             default:
                 return "Erro não tratado";
-        
-    }
 
-}
+        }
+
+    }
 
 }

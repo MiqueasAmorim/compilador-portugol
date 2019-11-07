@@ -26,17 +26,26 @@ public class ParametrosHandler extends AbstractHandler {
         if (currentToken == Token.FECHA_PARENTESES) {
             return true;
 
-        } else if (currentToken == Token.PONTO_VIRGULA) {
-            removeToken();
-            if (new DeclVar2Handler(tokens).handle()) {
+        } else if (new DeclVar2Handler(tokens).handle()) {
+            nextToken();
+            if (currentToken == Token.FECHA_PARENTESES) {
                 return (new ParametrosHandler(tokens).handle());
+            } else if (currentToken == Token.PONTO_VIRGULA) {
+                removeToken();
+                nextToken();
+                if (currentToken != Token.FECHA_PARENTESES) {
+                    return (new ParametrosHandler(tokens).handle());
+                } else {
+                    return false;
+                }
             } else {
+                setCodError(10);
                 return false;
             }
-        } else if (new DeclVar2Handler(tokens).handle()) {
-            return (new ParametrosHandler(tokens).handle());
+
         } else {
             return false;
         }
+
     }
 }

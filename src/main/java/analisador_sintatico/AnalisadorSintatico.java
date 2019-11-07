@@ -8,6 +8,7 @@ package analisador_sintatico;
 import analisador_sintatico.handlers.BlocoHandler;
 import analisador_sintatico.handlers.DeclConstanteHandler;
 import analisador_sintatico.handlers.DeclProcHandler;
+import analisador_sintatico.handlers.DeclProcedimentoHandler;
 import analisador_sintatico.handlers.ParametrosHandler;
 import analisador_sintatico.handlers.ProgramaHandler;
 import model.ErrorModel;
@@ -21,12 +22,12 @@ import java.util.ArrayList;
 public class AnalisadorSintatico {
 
     private ArrayList<TokenModel> tokens;
-    private DeclProcHandler handler;
+    private DeclProcedimentoHandler handler;
     private ArrayList<ErrorModel> errorList;
 
     public AnalisadorSintatico(ArrayList<TokenModel> tokens) {
         this.tokens = tokens;
-        this.handler = new DeclProcHandler(tokens);
+        this.handler = new DeclProcedimentoHandler(tokens);
         this.errorList = new ArrayList();
     }
 

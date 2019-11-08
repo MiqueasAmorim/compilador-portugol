@@ -39,26 +39,34 @@ public class DeclConsList2Handler extends AbstractHandler {
                                                 return false;
                                             }
                                         } else {
+                                            setCodError(10);
                                             return false;
                                         }
                                     } else {
+                                           setCodError(22);
                                         return false;
                                     }
                                 } else {
+                                        setCodError(204);
                                     return false;
                                 }
                             } else {
+                                    setCodError(2);
                                 return false;
                             }
                         } else {
+                            setCodError(206);
                             return false;
                         }
                     } else {
+                        setCodError(2);
                         return false;
                     }
                 } else {
+                    setCodError(1);
                     return false;
                 }
+            
             }
 
             if (currentToken == Token.OP_IGUAL) {
@@ -73,18 +81,23 @@ public class DeclConsList2Handler extends AbstractHandler {
                                 return false;
                             }
                         } else {
+                            setCodError(10);
                             return false;
                         }
                     } else {
+                        setCodError(22);
                         return false;
                     }
                 } else {
+                    setCodError(204);
                     return false;
                 }
             } else {
+                setCodError(203);
                 return false;
             }
         } else {
+                setCodError(7);
             return false;
         }
     }

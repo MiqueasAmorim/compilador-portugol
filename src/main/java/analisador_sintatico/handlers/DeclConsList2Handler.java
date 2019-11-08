@@ -153,7 +153,7 @@ public class DeclConsList2Handler extends AbstractHandler {
             return false;
         }
 
-        return false;
+        return true;
     }
     // return true;
 }

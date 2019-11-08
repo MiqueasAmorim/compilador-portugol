@@ -6,29 +6,32 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import model.Token;
 import model.TokenModel;
 
 /**
  *
  * @author Jefferson
  */
-public class DeclConstHandler extends AbstractHandler{
+public class DeclaracaoConstanteHandler extends AbstractHandler{
 
-    public DeclConstHandler(ArrayList<TokenModel> tokens) {
+    public DeclaracaoConstanteHandler(ArrayList<TokenModel> tokens) {
         super(tokens);
     }
 
     @Override
     public boolean handle() {
-        if(new VariavelHandler(tokens).handle()){
-            if(new ConjuntoIdsHandler(tokens).handle()){
-                return true;
+        if(nextToken()){
+            if(currentToken == Token.PC_CONSTANTE){
+                removeToken();
+                return new DeclConsListHandler(tokens).handle();
             }else{
+                System.out.println("Esperando token CONSTANTE!");
                 return false;
             }
         }else{
+            System.out.println("Esperando token CONSTANTE MAIS FDA ENCONTRADO!");
             return false;
         }
     }
-    
 }

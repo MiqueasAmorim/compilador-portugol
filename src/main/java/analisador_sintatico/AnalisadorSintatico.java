@@ -6,7 +6,7 @@
 package analisador_sintatico;
 
 import analisador_sintatico.handlers.BlocoHandler;
-import analisador_sintatico.handlers.DeclConstanteHandler;
+import analisador_sintatico.handlers.DeclaracaoConstanteHandler;
 import analisador_sintatico.handlers.DeclProcHandler;
 import analisador_sintatico.handlers.DeclProcedimentoHandler;
 import analisador_sintatico.handlers.ParametrosHandler;

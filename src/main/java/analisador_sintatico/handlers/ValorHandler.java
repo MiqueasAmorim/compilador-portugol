@@ -23,12 +23,18 @@ public class ValorHandler extends AbstractHandler {
 
     @Override
     public boolean handle() {
-        if (new UnarioHandler(tokens).handle() || currentToken == Token.STRING) {
+        if (new UnarioHandler(tokens).handle()) {
             return true;
-        }else{
-            setCodError(204);
-            return false;
+        } else {
+            nextToken();
+            if (currentToken == Token.STRING || currentToken == Token.PC_FALSO || currentToken == Token.PC_VERDADEIRO) {
+                removeToken();
+                return true;
+            } else {
+                setCodError(204);
+                return false;
+            }
         }
+       // return true;
     }
-
 }

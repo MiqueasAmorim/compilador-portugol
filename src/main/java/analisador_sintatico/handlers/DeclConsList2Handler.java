@@ -6,9 +6,9 @@
 package analisador_sintatico.handlers;
 
 import analisador_sintatico.handlers.AbstractHandler;
+import static analisador_sintatico.handlers.AbstractHandler.currentToken;
 import analisador_sintatico.handlers.TipoHandler;
 import analisador_sintatico.handlers.ValorHandler;
-import static analisador_sintatico.handlers.AbstractHandler.currentToken;
 import java.util.ArrayList;
 import model.Token;
 import model.TokenModel;
@@ -55,103 +55,105 @@ public class DeclConsList2Handler extends AbstractHandler {
                                         setCodError(210);
                                         return false;
                                     }
-                                }else{
+                                } else {
                                     setCodError(209);
                                     return false;
                                 }
-                            }else{
+                            } else {
                                 setCodError(205);
                                 return false;
                             }
-                        }else{
+                        } else {
                             setCodError(206);
                             return false;
                         }
 
-                                } else {
-                                    if (new TipoHandler(tokens).handle()) {
+                    } else {
+                        if (new TipoHandler(tokens).handle()) {
+                            if (nextToken()) {
+                                if (currentToken == Token.OP_IGUAL) {
+                                    removeToken();
+                                    if (new ValorHandler(tokens).handle()) {
                                         if (nextToken()) {
-                                            if (currentToken == Token.OP_IGUAL) {
+                                            if (currentToken == Token.PONTO_VIRGULA) {
                                                 removeToken();
-                                                if (new ValorHandler(tokens).handle()) {
-                                                    if (nextToken()) {
-                                                        if (currentToken == Token.PONTO_VIRGULA) {
-                                                            removeToken();
-                                                            if (new DeclConstList1Handler(tokens).handle()) {
+                                                if (new DeclConstList1Handler(tokens).handle()) {
 
-                                                            }
-                                                        } else {
-                                                            setCodError(10);
-                                                            return false;
-                                                        }
-
-                                                    } else {
-                                                        setCodError(9);
-                                                        return false;
-                                                    }
                                                 } else {
-                                                    setCodError(204);
                                                     return false;
-
                                                 }
                                             } else {
-                                                setCodError(205);
+                                                setCodError(10);
                                                 return false;
                                             }
 
                                         } else {
-                                            setCodError(206);
+                                            setCodError(9);
                                             return false;
                                         }
                                     } else {
-                                        setCodError(2);
+                                        setCodError(204);
                                         return false;
+
                                     }
+                                } else {
+                                    setCodError(205);
+                                    return false;
+                                }
+
+                            } else {
+                                setCodError(206);
+                                return false;
+                            }
+                        } else {
+                            setCodError(2);
+                            return false;
+                        }
+
+                    }
+
+                } else {
+                    setCodError(1);
+                    return false;
+                }
+
+            } else {
+                if (currentToken == Token.OP_IGUAL) {
+                    removeToken();
+                    if (new ValorHandler(tokens).handle()) {
+                        if (nextToken()) {
+                            if (currentToken == Token.PONTO_VIRGULA) {
+                                removeToken();
+                                if (new DeclConstList1Handler(tokens).handle()) {
+                                    return true;
 
                                 }
 
                             } else {
-                                setCodError(1);
+                                setCodError(10);
                                 return false;
                             }
 
                         } else {
-                            if (currentToken == Token.OP_IGUAL) {
-                                removeToken();
-                                if (new ValorHandler(tokens).handle()) {
-                                    if (nextToken()) {
-                                        if (currentToken == Token.PONTO_VIRGULA) {
-                                            removeToken();
-                                            if (new DeclConstList1Handler(tokens).handle()) {
-                                                return true;
-                                            } else {
-                                                setCodError(202);
-                                                return false;
-                                            }
-                                        } else {
-                                            setCodError(10);
-                                            return false;
-                                        }
-
-                                    } else {
-                                        setCodError(9);
-                                        return false;
-                                    }
-                                } else {
-                                    setCodError(204);
-                                    return false;
-                                }
-                            } else {
-                                setCodError(205);
-                                return false;
-                            }
-
+                            setCodError(9);
+                            return false;
                         }
                     } else {
-                        setCodError(7);
+                        setCodError(204);
                         return false;
                     }
-                   return true;
+                } else {
+                    setCodError(205);
+                    return false;
                 }
-                // return true;
+
             }
+        } else {
+            setCodError(8);
+            return false;
+        }
+
+        return false;
+    }
+    // return true;
+}

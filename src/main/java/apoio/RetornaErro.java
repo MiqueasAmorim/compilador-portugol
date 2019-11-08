@@ -109,6 +109,12 @@ public class RetornaErro {
                 return "Esperado \"FUNÇÃO\", mas \"" + error.getLexema() + "\" encontrado.";
             case 107:
                 return "Esperado \"VARIAVEL\" ou \"CONSTANTE\" ou \"INICIO\", mas \"fim de arquivo\" encontrado.";
+            case 211:
+                    return "Esperado \" ' \", mas \"fim de arquivo\" encontrado.";
+            case 212:
+                   return "Esperado \" ' \", mas \"" + error.getLexema() + "\" encontrado.";
+            case 213:
+                    
             default:
                 return "Erro não tratado";
 

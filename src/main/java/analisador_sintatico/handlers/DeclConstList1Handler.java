@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import analisador_sintatico.handlers.AbstractHandler;
+import static analisador_sintatico.handlers.AbstractHandler.tokens;
 import java.util.ArrayList;
 import model.TokenModel;
 
@@ -25,13 +26,16 @@ public class DeclConstList1Handler extends AbstractHandler {
             if (new DeclConsList2Handler(tokens).handle()) {
                 return true;
             } else {
+               // setCodError(5);
                 return false;
             }
+
         } else {
-            return true;
+            setCodError(207);
+            return false;
         }
-//        return true;
+        
     }
+//        return true;
+
 }
-
-

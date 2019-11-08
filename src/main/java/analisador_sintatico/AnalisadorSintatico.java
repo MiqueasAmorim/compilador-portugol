@@ -21,12 +21,12 @@ import java.util.ArrayList;
 public class AnalisadorSintatico {
 
     private ArrayList<TokenModel> tokens;
-    private DeclProcHandler handler;
+    private DeclConstanteHandler handler;
     private ArrayList<ErrorModel> errorList;
 
     public AnalisadorSintatico(ArrayList<TokenModel> tokens) {
         this.tokens = tokens;
-        this.handler = new DeclProcHandler(tokens);
+        this.handler = new DeclConstanteHandler(tokens);
         this.errorList = new ArrayList();
     }
 

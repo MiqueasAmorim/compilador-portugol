@@ -27,7 +27,18 @@ public class DeclaracoesHandler extends AbstractHandler {
             if (new DeclConstanteHandler(tokens).handle()) {
                 nextToken();
                 if (currentToken == Token.PC_VARIAVEL) {
-                    return new DeclaracaoVariavelHandler(tokens).handle();
+                    if (new DeclaracaoVariavelHandler(tokens).handle()) {
+                        nextToken();
+                        if (currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_FUNCAO) {
+                            return new DeclProcedimentoHandler(tokens).handle();
+                        }
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                if (currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_FUNCAO) {
+                    return new DeclProcedimentoHandler(tokens).handle();
                 }
                 return true;
             } else {
@@ -35,9 +46,21 @@ public class DeclaracoesHandler extends AbstractHandler {
             }
         }
         if (currentToken == Token.PC_VARIAVEL) {
-            return new DeclaracaoVariavelHandler(tokens).handle();
+            if (new DeclaracaoVariavelHandler(tokens).handle()) {
+                nextToken();
+                if (currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_FUNCAO) {
+                    return new DeclProcedimentoHandler(tokens).handle();
+                }
+                return true;
+            } else {
+                return false;
+            }
         }
+        if (currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_FUNCAO) {
+            return new DeclProcedimentoHandler(tokens).handle();
+        }
+
         return true;
     }
-    
+
 }

@@ -23,7 +23,7 @@ public class DeclVarList2Handler extends AbstractHandler {
     @Override
     public boolean handle() {
         if (nextToken()) {
-            if (currentToken == Token.PC_CONSTANTE || currentToken == Token.PC_INICIO) {
+            if (currentToken == Token.PC_CONSTANTE || currentToken == Token.PC_FUNCAO || currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_INICIO) {
                 return true;
             }
             return (new DeclVarHandler(tokens).handle() && new DeclVarList2Handler(tokens).handle());

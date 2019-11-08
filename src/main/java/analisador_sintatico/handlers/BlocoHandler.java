@@ -30,6 +30,7 @@ public class BlocoHandler extends AbstractHandler {
                             removeToken();
                             if (nextToken()) {
                                 if (currentToken == Token.PONTO_VIRGULA) {
+                                    removeToken();
                                     return true;
                                 } else {
                                     setCodError(10);// Esperado ";", mas encontrou outra coisa

@@ -22,12 +22,12 @@ import java.util.ArrayList;
 public class AnalisadorSintatico {
 
     private ArrayList<TokenModel> tokens;
-    private DeclProcedimentoHandler handler;
+    private ProgramaHandler handler;
     private ArrayList<ErrorModel> errorList;
 
     public AnalisadorSintatico(ArrayList<TokenModel> tokens) {
         this.tokens = tokens;
-        this.handler = new DeclProcedimentoHandler(tokens);
+        this.handler = new ProgramaHandler(tokens);
         this.errorList = new ArrayList();
     }
 

@@ -55,6 +55,9 @@ public class KeywordStyledDocument extends DefaultStyledDocument {
         keywords.add("continua");
         keywords.add("resto");
         keywords.add("quociente");
+        keywords.add("e");
+        keywords.add("ou");
+        keywords.add("nao");
         
     }
 

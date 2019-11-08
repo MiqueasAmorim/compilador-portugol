@@ -88,7 +88,7 @@ public class InstHandler extends AbstractHandler {
                         }
                     }
                 }
-            }
+            } 
         }
         if (currentToken == Token.PC_ENQUANTO) {
             removeToken();
@@ -119,11 +119,39 @@ public class InstHandler extends AbstractHandler {
                 }
             }
         }
+        
+        if (currentToken == Token.PC_PARA) {
+            removeToken();
+            if (new VariavelHandler(tokens).handle()) {
+                nextToken();
+                if (currentToken == Token.OP_ATRIBUICAO) {
+                    removeToken();
+                    nextToken();
+                    if (currentToken == Token.INTEIRO || currentToken == Token.IDENTIFICADOR) {
+                        removeToken();
+                        nextToken();
+                        if (currentToken == Token.PC_ATE) {
+                            removeToken();
+                            nextToken();
+                            if (currentToken == Token.INTEIRO || currentToken == Token.IDENTIFICADOR) {
+                                removeToken();
+                                nextToken();
+                                if (currentToken == Token.PC_FACA) {
+                                    removeToken();
+                                    return new InstHandler(tokens).handle();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         if (currentToken == Token.PC_PARE) {
             removeToken();
             nextToken();
             if (currentToken == Token.PONTO_VIRGULA) {
+                removeToken();
                 return true;
             }
         }
@@ -132,6 +160,7 @@ public class InstHandler extends AbstractHandler {
             removeToken();
             nextToken();
             if (currentToken == Token.PONTO_VIRGULA) {
+                removeToken();
                 return true;
             }
         }
@@ -172,6 +201,10 @@ public class InstHandler extends AbstractHandler {
                     }
                 }
             }
+        }
+        
+        if (currentToken == Token.PC_INICIO) {
+            return new BlocoHandler(tokens).handle();
         }
         
         setCodError(16);

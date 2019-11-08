@@ -38,7 +38,7 @@ public class DeclProcHandler extends AbstractHandler {
                                                 removeToken();
                                                 nextToken();
                                                 if (currentToken == Token.PC_CONSTANTE) {
-                                                    if (new DeclConstanteHandler(tokens).handle()) {
+                                                    if (new DeclaracaoConstanteHandler(tokens).handle()) {
                                                         nextToken();
                                                         if (currentToken == Token.PC_VARIAVEL) {
                                                             if (new DeclaracaoVariavelHandler(tokens).handle()) {
@@ -113,7 +113,7 @@ public class DeclProcHandler extends AbstractHandler {
                                                             removeToken();
                                                             nextToken();
                                                             if (currentToken == Token.PC_CONSTANTE) {
-                                                                if (new DeclConstanteHandler(tokens).handle()) {
+                                                                if (new DeclaracaoConstanteHandler(tokens).handle()) {
                                                                     nextToken();
                                                                     if (currentToken == Token.PC_VARIAVEL) {
                                                                         if (new DeclaracaoVariavelHandler(tokens).handle()) {

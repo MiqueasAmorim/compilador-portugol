@@ -12,23 +12,22 @@ import model.TokenModel;
  *
  * @author Jefferson
  */
-public class DeclConstHandler extends AbstractHandler{
+public class DeclConsList1Handler extends AbstractHandler {
 
-    public DeclConstHandler(ArrayList<TokenModel> tokens) {
+    public DeclConsList1Handler(ArrayList<TokenModel> tokens) {
         super(tokens);
     }
 
     @Override
     public boolean handle() {
-        if(new VariavelHandler(tokens).handle()){
-            if(new ConjuntoIdsHandler(tokens).handle()){
+        if (new DeclConstHandler(tokens).handle()) {
+            if (new DeclConsList2Handler(tokens).handle()) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
-            return false;
+        } else {
+            return true;
         }
     }
-    
 }

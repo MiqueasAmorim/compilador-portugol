@@ -25,7 +25,7 @@ public class ConteudoHandler extends AbstractHandler {
         if (new VariavelHandler(tokens).handle()) {
             return true;
         }
-        if (currentToken == Token.STRING) {
+        if (currentToken == Token.STRING || currentToken == Token.CARACTERE) {
             removeToken();
             return true;
         }

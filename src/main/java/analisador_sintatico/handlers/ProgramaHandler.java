@@ -75,6 +75,10 @@ public class ProgramaHandler extends AbstractHandler {
             return false;
         }
         removeToken();
+        if (nextToken()) {
+            setCodError(41);
+            return false;
+        }
         return true;
     }
     

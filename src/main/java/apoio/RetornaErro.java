@@ -48,9 +48,9 @@ public class RetornaErro {
             case 13:
                 return "Esperado \"OU\" ou \"E\", mas \"" + error.getLexema() + "\" encontrado.";
             case 14:
-                return "Esperado \"número\" ou \"string\", mas \"" + error.getLexema() + "\" encontrado.";
+                return "Esperado \"identificador\", \"número\" ou \"string\", mas \"" + error.getLexema() + "\" encontrado.";
             case 15:
-                return "Esperado \"número\" ou \"string\", mas \"fim de arquivo\" encontrado.";
+                return "Esperado \"identificador\", \"número\" ou \"string\", mas \"fim de arquivo\" encontrado.";
             case 16:
                 return "Instrução mal formada";
             case 17:
@@ -73,6 +73,42 @@ public class RetornaErro {
                 return "Esperando \".\", mas \"fim de arquivo\" encontrado.";
             case 26:
                 return "Esperada \".\", mas \"" + error.getLexema() + "\" encontrado.";
+            
+            // Erros das instruções mal formadas
+            
+            case 27:
+                return "Esperado \":=\" ou \"(\" ou \"[\", mas encontrou \"fim de arquivo\"";
+            case 28:
+                return "Esperado \":=\" ou \"(\" ou \"[\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 29:
+                return "Esperado \"]\", mas encontrou \"fim de arquivo\"";
+            case 30:
+                return "Esperada \"]\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 31:
+                return "Esperando \":=\", mas \"fim de arquivo\" encontrado.";
+            case 32:
+                return "Esperada \":=\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 33:
+                return "Esperando \")\", mas \"fim de arquivo\" encontrado.";
+            case 34:
+                return "Esperada \")\", mas \"" + error.getLexema() + "\" encontrado.";
+                
+            case 35:
+                return "Esperado \"ENTAO\", mas \"fim de arquivo\" encontrado.";
+            case 36:
+                return "Esperada \"ENTAO\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 37:
+                return "Esperado \"FACA\", mas \"fim de arquivo\" encontrado.";
+            case 38:
+                return "Esperada \"FACA\", mas \"" + error.getLexema() + "\" encontrado.";
+            case 39:
+                return "Esperado \"ATE\", mas \"fim de arquivo\" encontrado.";
+            case 40:
+                return "Esperada \"ATE\", mas \"" + error.getLexema() + "\" encontrado.";
+                
+            case 41:
+                return "Token \"" + error.getLexema() + "\" nao esperado.";
+                
             case 200:
                 return "Esperado \"CONSTANTE\", mas \"fim de arquivo\" encontrado.";
             case 201:

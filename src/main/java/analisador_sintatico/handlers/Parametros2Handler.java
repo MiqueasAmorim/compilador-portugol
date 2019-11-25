@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import model.Token;
 import model.TokenModel;
 
 /**
@@ -20,10 +21,14 @@ public class Parametros2Handler extends AbstractHandler {
 
     @Override
     public boolean handle() {
+        nextToken();
+        if (currentToken == Token.FECHA_PARENTESES) {
+            return true;
+        }
         if (new ExprHandler(tokens).handle() && new ContParametrosHandler(tokens).handle()) {
             return true;
         }
-        return true;
+        return false;
     }
     
 }

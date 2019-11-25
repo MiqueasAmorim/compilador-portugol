@@ -9,6 +9,7 @@ import analisador_sintatico.handlers.BlocoHandler;
 import analisador_sintatico.handlers.DeclaracaoConstanteHandler;
 import analisador_sintatico.handlers.DeclProcHandler;
 import analisador_sintatico.handlers.DeclProcedimentoHandler;
+import analisador_sintatico.handlers.InstHandler;
 import analisador_sintatico.handlers.ParametrosHandler;
 import analisador_sintatico.handlers.ProgramaHandler;
 import model.ErrorModel;

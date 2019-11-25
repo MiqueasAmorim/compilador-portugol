@@ -28,13 +28,28 @@ public class InstHandler extends AbstractHandler {
         }
         if (new VariavelHandler(tokens).handle()) {
             nextToken();
+            if (currentToken == null) {
+                setCodError(27); // Esperado ':=' ou '(' ou '[' mas encontrou "fim de arquivo"
+                return false;
+            }
+            if (!(currentToken == Token.OP_ATRIBUICAO || currentToken == Token.ABRE_COLCHETES || currentToken == Token.ABRE_PARENTESES)) {
+                setCodError(28); // Esperado ':=' ou '(' ou '[' mas encontrou outra coisa
+                return false;
+            }
+
             if (currentToken == Token.OP_ATRIBUICAO) {
                 removeToken();
                 if (new ExprHandler(tokens).handle()) {
-                    nextToken();
+                    if (!nextToken()) {
+                        setCodError(9); // Esperado ";", mas encontrou "fim de arquivo"
+                        return false;
+                    }
                     if (currentToken == Token.PONTO_VIRGULA) {
                         removeToken();
                         return true;
+                    } else {
+                        setCodError(10); // Esperado ";", mas outra coisa encontrada
+                        return false;
                     }
                 }
             }
@@ -42,20 +57,38 @@ public class InstHandler extends AbstractHandler {
             if (currentToken == Token.ABRE_COLCHETES) {
                 removeToken();
                 if (new ExprHandler(tokens).handle()) {
-                    nextToken();
+                    if (!nextToken()) {
+                        setCodError(29); // Esperado "]", mas encontrou "fim de arquivo"
+                        return false;
+                    }
                     if (currentToken == Token.FECHA_COLCHETES) {
                         removeToken();
-                        nextToken();
+                        if (!nextToken()) {
+                            setCodError(31); // Esperado ":=", mas encontrou "fim de arquivo"
+                            return false;
+                        }
                         if (currentToken == Token.OP_ATRIBUICAO) {
                             removeToken();
                             if (new ExprHandler(tokens).handle()) {
-                                nextToken();
+                                if (!nextToken()) {
+                                    setCodError(9); // Esperado ";", mas encontrou "fim de arquivo"
+                                    return false;
+                                }
                                 if (currentToken == Token.PONTO_VIRGULA) {
                                     removeToken();
                                     return true;
+                                } else {
+                                    setCodError(10); // Esperado ";", mas outra coisa encontrada
+                                    return false;
                                 }
                             }
+                        } else {
+                            setCodError(32); // Esperado ":=", mas outra coisa encontrada
+                            return false;
                         }
+                    } else {
+                        setCodError(30); // Esperado "]", mas encontrou outra coisa
+                        return false;
                     }
                 }
 
@@ -63,14 +96,26 @@ public class InstHandler extends AbstractHandler {
             if (currentToken == Token.ABRE_PARENTESES) {
                 removeToken();
                 if (new Parametros2Handler(tokens).handle()) {
-                    nextToken();
+                    if (!nextToken()) {
+                        setCodError(33); // Esperado ")", mas encontrou "fim de arquivo"
+                        return false;
+                    }
                     if (currentToken == Token.FECHA_PARENTESES) {
                         removeToken();
-                        nextToken();
+                        if (!nextToken()) {
+                            setCodError(9); // Esperado ";", mas encontrou "fim de arquivo"
+                            return false;
+                        }
                         if (currentToken == Token.PONTO_VIRGULA) {
                             removeToken();
                             return true;
+                        } else {
+                            setCodError(10); // Esperado ";", mas outro token encontrado
+                            return false;
                         }
+                    } else {
+                        setCodError(34);
+                        return false;
                     }
                 }
             }
@@ -79,26 +124,40 @@ public class InstHandler extends AbstractHandler {
         if (currentToken == Token.PC_SE) {
             removeToken();
             if (new ExprHandler(tokens).handle()) {
-                nextToken();
+                if (!nextToken()) {
+                    setCodError(35); // Esperado "ENTAO", mas "fim de arquivo" encontrado
+                    return false;
+                }
                 if (currentToken == Token.PC_ENTAO) {
                     removeToken();
                     if (new InstHandler(tokens).handle()) {
-                        if (new ContSeHandler(tokens).handle()) {
-                            return true;
+                        nextToken();
+                        if (currentToken == Token.PC_SENAO) {
+                            return new ContSeHandler(tokens).handle();
                         }
+                        return true;
                     }
+                } else {
+                    setCodError(36); // Esperado "ENTAO", mas outro token encontrado
+                    return false;
                 }
-            } 
+            }
         }
         if (currentToken == Token.PC_ENQUANTO) {
             removeToken();
             if (new ExprHandler(tokens).handle()) {
-                nextToken();
+                if (!nextToken()) {
+                    setCodError(37); // Esperado "FACA", mas "fim de arquivo" encontrado
+                    return false;
+                }
                 if (currentToken == Token.PC_FACA) {
                     removeToken();
                     if (new InstHandler(tokens).handle()) {
                         return true;
                     }
+                } else {
+                    setCodError(38); // Esperado "FACA", mas outro token encontrado
+                    return false;
                 }
             }
         }
@@ -106,108 +165,186 @@ public class InstHandler extends AbstractHandler {
         if (currentToken == Token.PC_REPITA) {
             removeToken();
             if (new InstHandler(tokens).handle()) {
-                nextToken();
+                if (!nextToken()) {
+                    setCodError(39); // Esperado "ATE", mas "fim de arquivo" encontrado
+                    return false;
+                }
                 if (currentToken == Token.PC_ATE) {
                     removeToken();
                     if (new ExprHandler(tokens).handle()) {
-                        nextToken();
+                        if (!nextToken()) {
+                            setCodError(9); // Esperado ";", mas "fim de arquivo" encontrado
+                            return false;
+                        }
                         if (currentToken == Token.PONTO_VIRGULA) {
                             removeToken();
                             return true;
+                        } else {
+                            setCodError(10); // Esperado ";", mas outro token encontrado
+                            return false;
                         }
                     }
+                } else {
+                    setCodError(40); // Esperado "ATE", mas outro token encontrado
+                    return false;
                 }
             }
         }
-        
+
         if (currentToken == Token.PC_PARA) {
             removeToken();
             if (new VariavelHandler(tokens).handle()) {
-                nextToken();
+                if (!nextToken()) {
+                    setCodError(31); // Esperado ":=", mas "fim de arquivo" encontrado
+                    return false;
+                }
                 if (currentToken == Token.OP_ATRIBUICAO) {
                     removeToken();
                     nextToken();
                     if (currentToken == Token.INTEIRO || currentToken == Token.IDENTIFICADOR) {
                         removeToken();
-                        nextToken();
+                        if (!nextToken()) {
+                            setCodError(39); // Esperado "ATE", mas "fim de arquivo" encontrado
+                            return false;
+                        }
                         if (currentToken == Token.PC_ATE) {
                             removeToken();
                             nextToken();
                             if (currentToken == Token.INTEIRO || currentToken == Token.IDENTIFICADOR) {
                                 removeToken();
-                                nextToken();
+                                if (!nextToken()) {
+                                    setCodError(37); // Esperado "FACA", mas "fim de arquivo" encontrado
+                                    return false;
+                                }
                                 if (currentToken == Token.PC_FACA) {
                                     removeToken();
                                     return new InstHandler(tokens).handle();
+                                } else {
+                                    setCodError(38); // Esperado "FACA", mas outro token encontrado
+                                    return false;
                                 }
                             }
+                        } else {
+                            setCodError(40); // Esperado "ATE", mas outro token encontrado
+                            return false;
                         }
                     }
+                } else {
+                    setCodError(32); // Esperado ":=", mas outro token encontrado
+                    return false;
                 }
             }
         }
 
         if (currentToken == Token.PC_PARE) {
             removeToken();
-            nextToken();
+            if (!nextToken()) {
+                setCodError(9); // Esperado ";", mas "fim de arquivo" encontrado
+                return false;
+            }
             if (currentToken == Token.PONTO_VIRGULA) {
                 removeToken();
                 return true;
+            } else {
+                setCodError(10); // Esperado ";", mas outro token encontrado
+                return false;
             }
         }
 
         if (currentToken == Token.PC_CONTINUA) {
             removeToken();
-            nextToken();
+            if (!nextToken()) {
+                setCodError(9); // Esperado ";", mas "fim de arquivo" encontrado
+                return false;
+            }
             if (currentToken == Token.PONTO_VIRGULA) {
                 removeToken();
                 return true;
+            } else {
+                setCodError(10); // Esperado ";", mas outro token encontrado
+                return false;
             }
         }
 
         if (currentToken == Token.PC_LEIA) {
             removeToken();
-            nextToken();
+            if (!nextToken()) {
+                setCodError(102); // Esperado "(", mas "fim de arquivo" encontrado
+                return false;
+            }
             if (currentToken == Token.ABRE_PARENTESES) {
                 removeToken();
                 if (new VariavelHandler(tokens).handle() && new ConjuntoIdsHandler(tokens).handle()) {
-                    nextToken();
+                    if (!nextToken()) {
+                        setCodError(33); // Esperado ")", mas "fim de arquivo" encontrado
+                        return false;
+                    }
                     if (currentToken == Token.FECHA_PARENTESES) {
                         removeToken();
-                        nextToken();
+                        if (!nextToken()) {
+                            setCodError(9); // Esperado ";", mas "fim de arquivo" encontrado
+                            return false;
+                        }
                         if (currentToken == Token.PONTO_VIRGULA) {
                             removeToken();
                             return true;
+                        } else {
+                            setCodError(10); // Esperado ";", mas outro token encontrado
+                            return false;
                         }
+                    } else {
+                        setCodError(34); // Esperado ")", mas outro token encontrado
+                        return false;
                     }
                 }
+            } else {
+                setCodError(103);// Esperado ")", mas outro token encontrado
+                return false;
             }
         }
-        
+
         if (currentToken == Token.PC_ESCREVA) {
             removeToken();
-            nextToken();
+            if (!nextToken()) {
+                setCodError(102); // Esperado "(", mas "fim de arquivo" encontrado
+                return false;
+            }
             if (currentToken == Token.ABRE_PARENTESES) {
                 removeToken();
                 if (new ConteudoHandler(tokens).handle() && new MaisConteudoHandler(tokens).handle()) {
-                    nextToken();
+                    if (!nextToken()) {
+                        setCodError(33); // Esperado ")", mas "fim de arquivo" encontrado
+                        return false;
+                    }
                     if (currentToken == Token.FECHA_PARENTESES) {
                         removeToken();
-                        nextToken();
+                        if (!nextToken()) {
+                            setCodError(9); // Esperado ";", mas "fim de arquivo" encontrado
+                            return false;
+                        }
                         if (currentToken == Token.PONTO_VIRGULA) {
                             removeToken();
                             return true;
+                        } else {
+                            setCodError(10); // Esperado ";", mas outro token encontrado
+                            return false;
                         }
+                    } else {
+                        setCodError(34); // Esperado ")", mas outro token encontrado
+                        return false;
                     }
                 }
+            } else {
+                setCodError(103);// Esperado ")", mas outro token encontrado
+                return false;
             }
         }
-        
+
         if (currentToken == Token.PC_INICIO) {
             return new BlocoHandler(tokens).handle();
         }
-        
-        setCodError(16);
+
+        //setCodError(16);
         return false;
     }
 

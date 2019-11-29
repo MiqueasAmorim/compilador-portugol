@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,18 +16,30 @@ import model.TokenModel;
  */
 public class UnarioHandler extends AbstractHandler {
 
-    public UnarioHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public UnarioHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode unario = new DefaultMutableTreeNode("Unario");
         nextToken();
         if (currentToken == Token.OP_ADICAO || currentToken == Token.OP_SUBTRACAO) {
+            unario.add(new DefaultMutableTreeNode(getCurrentLexema()));
             removeToken();
-            return (new FatorHandler(tokens).handle());
+            if (new FatorHandler(tokens, unario).handle()) {
+                this.noPai.add(unario);
+                return true;
+            } else {
+                return false;
+            }
         }
-        return (new FatorHandler(tokens).handle());
+        if (new FatorHandler(tokens, unario).handle()) {
+            this.noPai.add(unario);
+            return true;
+        } else {
+            return false;
+        }
 
     }
 

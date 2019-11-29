@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -13,16 +14,19 @@ import model.TokenModel;
  *
  * @author Miqueas
  */
-public class VariavelHandler extends AbstractHandler {
-
-    public VariavelHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+public class IdentificadorHandler extends AbstractHandler {
+    
+    public IdentificadorHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
         if (nextToken()) {
             if (currentToken == Token.IDENTIFICADOR) {
+                DefaultMutableTreeNode identificador = new DefaultMutableTreeNode("Identificador");
+                identificador.add(new DefaultMutableTreeNode(getCurrentLexema()));
+                this.noPai.add(identificador);
                 removeToken();
                 return true;
             } else {

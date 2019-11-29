@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.ErrorModel;
 import model.Token;
 import model.TokenModel;
@@ -16,23 +17,27 @@ import model.TokenModel;
  */
 public class DeclVarHandler extends AbstractHandler {
 
-    public DeclVarHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public DeclVarHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode declVar = new DefaultMutableTreeNode("DeclVar");
 //        if (nextToken()) {
-            if (new VariavelHandler(tokens).handle()) {
+            if (new IdentificadorHandler(tokens, declVar).handle()) {
 //                if (nextToken()) {
-                    if (new ConjuntoIdsHandler(tokens).handle()) {
+                    if (new ConjuntoIdsHandler(tokens, declVar).handle()) {
                     //new ConjuntoIdsHandler(tokens).handle();
                         if (nextToken()) {
                             if (currentToken == Token.DOIS_PONTOS) {
+                                declVar.add(new DefaultMutableTreeNode(":"));
                                 removeToken();
-                                if (new TipoHandler(tokens).handle()) {
+                                if (new TipoHandler(tokens, declVar).handle()) {
                                     if (nextToken()) {
                                         if (currentToken == Token.PONTO_VIRGULA) {
+                                            declVar.add(new DefaultMutableTreeNode(";"));
+                                            this.noPai.add(declVar);
                                             removeToken();
                                             return true;
                                         } else {

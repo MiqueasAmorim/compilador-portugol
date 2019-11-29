@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,16 +16,23 @@ import model.TokenModel;
  */
 public class DeclaracaoConstanteHandler extends AbstractHandler{
 
-    public DeclaracaoConstanteHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public DeclaracaoConstanteHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode declaracaoConstante = new DefaultMutableTreeNode("DeclaracaoConstante");
         if(nextToken()){
             if(currentToken == Token.PC_CONSTANTE){
+                declaracaoConstante.add(new DefaultMutableTreeNode("constante"));
                 removeToken();
-                return new DeclConsListHandler(tokens).handle();
+                if (new DeclConsListHandler(tokens, declaracaoConstante).handle()) {
+                    this.noPai.add(declaracaoConstante);
+                    return true;
+                } else {
+                    return false;
+                }
             }else{
                 System.out.println("Esperando token CONSTANTE!");
                 return false;

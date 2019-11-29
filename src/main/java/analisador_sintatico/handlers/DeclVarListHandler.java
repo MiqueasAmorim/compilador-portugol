@@ -7,6 +7,7 @@ package analisador_sintatico.handlers;
 
 import static analisador_sintatico.handlers.AbstractHandler.currentToken;
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -16,14 +17,20 @@ import model.TokenModel;
  */
 public class DeclVarListHandler extends AbstractHandler {
 
-    public DeclVarListHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public DeclVarListHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
 //        if (nextToken()) {
-            return (new DeclVarHandler(tokens).handle() && new DeclVarList2Handler(tokens).handle());
+            DefaultMutableTreeNode declVarList = new DefaultMutableTreeNode("DeclVarList");
+            if (new DeclVarHandler(tokens, declVarList).handle() && new DeclVarList2Handler(tokens, declVarList).handle()) {
+                this.noPai.add(declVarList);
+                return true;
+            } else {
+                return false;
+            }
 //        } else {
 //            return false;
 //        }  

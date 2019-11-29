@@ -7,6 +7,7 @@ package analisador_sintatico.handlers;
 
 import static analisador_sintatico.handlers.AbstractHandler.tokens;
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -16,29 +17,40 @@ import model.TokenModel;
  */
 public class DeclaracoesHandler extends AbstractHandler {
 
-    public DeclaracoesHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public DeclaracoesHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
         nextToken();
+        DefaultMutableTreeNode declaracoes = new DefaultMutableTreeNode("Declaracoes");
         if (currentToken == Token.PC_CONSTANTE) {
-            if (new DeclaracaoConstanteHandler(tokens).handle()) {
+            if (new DeclaracaoConstanteHandler(tokens, declaracoes).handle()) {
                 nextToken();
                 if (currentToken == Token.PC_VARIAVEL) {
-                    if (new DeclaracaoVariavelHandler(tokens).handle()) {
+                    if (new DeclaracaoVariavelHandler(tokens, declaracoes).handle()) {
                         nextToken();
                         if (currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_FUNCAO) {
-                            return new DeclProcedimentoHandler(tokens).handle();
+                            if (new DeclProcedimentoHandler(tokens, declaracoes).handle()) {
+                                this.noPai.add(declaracoes);
+                                return true;
+                            }
+                            return false;
                         }
+                        this.noPai.add(declaracoes);
                         return true;
                     } else {
                         return false;
                     }
                 }
+                this.noPai.add(declaracoes);
                 if (currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_FUNCAO) {
-                    return new DeclProcedimentoHandler(tokens).handle();
+                    if (new DeclProcedimentoHandler(tokens, declaracoes).handle()) {
+                        this.noPai.add(declaracoes);
+                        return true;
+                    }
+                    return false;
                 }
                 return true;
             } else {
@@ -46,18 +58,27 @@ public class DeclaracoesHandler extends AbstractHandler {
             }
         }
         if (currentToken == Token.PC_VARIAVEL) {
-            if (new DeclaracaoVariavelHandler(tokens).handle()) {
+            if (new DeclaracaoVariavelHandler(tokens, declaracoes).handle()) {
                 nextToken();
                 if (currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_FUNCAO) {
-                    return new DeclProcedimentoHandler(tokens).handle();
+                    if (new DeclProcedimentoHandler(tokens, declaracoes).handle()) {
+                        this.noPai.add(declaracoes);
+                        return true;
+                    }
+                    return false;
                 }
+                this.noPai.add(declaracoes);
                 return true;
             } else {
                 return false;
             }
         }
         if (currentToken == Token.PC_PROCEDIMENTO || currentToken == Token.PC_FUNCAO) {
-            return new DeclProcedimentoHandler(tokens).handle();
+            if (new DeclProcedimentoHandler(tokens, declaracoes).handle()) {
+                this.noPai.add(declaracoes);
+                return true;
+            }
+            return false;
         }
 
         return true;

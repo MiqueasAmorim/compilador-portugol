@@ -30,11 +30,16 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
 import model.ErrorModel;
 import model.TokenModel;
 import view.PrincipalView;
@@ -193,9 +198,27 @@ public class PrincipalPresenter {
         DefaultTableModel tblModelOutput = (DefaultTableModel) view.getTblOutput().getModel();
         if (!analisadorSintatico.run()) {
             //System.err.println("[ERRO SINTÁTICO] -> Linha " + ErrorModel.getInstance().getLinha() + " - " + RetornaErro.getError(ErrorModel.getInstance()) + "");
+            view.getPanelArvoreSintatica().removeAll();
+            view.getPanelArvoreSintatica().repaint();
+            view.getPanelArvoreSintatica().validate();
             tblModelOutput.addRow(new Object[]{"<html><font color=\"red\"><b>[ERRO SINTÁTICO] => " + RetornaErro.getError(ErrorModel.getInstance()) + " na linha " + ErrorModel.getInstance().getLinha() + "</b></font></html>"});
         } else {
             tblModelOutput.addRow(new Object[]{"<html><font color=\"green\"><b>Nenhum erro sintático.</b></font></html>"});
+            
+//      Cria árvore sintática
+//            DefaultMutableTreeNode programa = new DefaultMutableTreeNode("PROGRAMA");
+//            DefaultMutableTreeNode id = new DefaultMutableTreeNode("ID");
+//            id.add(new DefaultMutableTreeNode("fat"));
+//            programa.add(id);
+            JTree arvore = new JTree(analisadorSintatico.getArvoreSintatica());
+            for (int i = 0; i < arvore.getRowCount(); i++) {
+                arvore.expandRow(i);
+            }
+            view.getPanelArvoreSintatica().removeAll();
+            //view.getPanelArvoreSintatica().add();
+            view.getPanelArvoreSintatica().add(new JScrollPane(arvore));
+            view.getPanelArvoreSintatica().repaint();
+            view.getPanelArvoreSintatica().validate();
         }
 
 //        ArrayList<ErrorModel> erros = analisadorSintatico.run();

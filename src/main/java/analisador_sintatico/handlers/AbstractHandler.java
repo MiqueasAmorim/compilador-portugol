@@ -8,6 +8,7 @@ package analisador_sintatico.handlers;
 import model.TokenModel;
 import model.Token;
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.ErrorModel;
 
 /**
@@ -19,12 +20,14 @@ public abstract class AbstractHandler implements IHandler{
     protected static ArrayList<TokenModel> tokens;
     protected ArrayList<Token> terminais;
     protected static Token currentToken;
+    protected DefaultMutableTreeNode noPai;
     //protected static int errorCode = 0;
     protected static int linha = 1;
 
-    public AbstractHandler(ArrayList<TokenModel> tokens) {
+    public AbstractHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
         this.terminais = new ArrayList();
         this.tokens = tokens;
+        this.noPai = noPai;
     }
     
     public boolean nextToken(){

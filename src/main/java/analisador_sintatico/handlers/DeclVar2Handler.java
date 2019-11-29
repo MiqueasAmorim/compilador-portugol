@@ -7,6 +7,7 @@ package analisador_sintatico.handlers;
 
 import static analisador_sintatico.handlers.AbstractHandler.tokens;
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -16,22 +17,24 @@ import model.TokenModel;
  */
 public class DeclVar2Handler extends AbstractHandler {
 
-    public DeclVar2Handler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public DeclVar2Handler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
-        if (new VariavelHandler(tokens).handle()) {
-            if (new ConjuntoIdsHandler(tokens).handle()) {
+        DefaultMutableTreeNode declVar2 = new DefaultMutableTreeNode("DeclVar2");
+        if (new IdentificadorHandler(tokens, declVar2).handle()) {
+            if (new ConjuntoIdsHandler(tokens, declVar2).handle()) {
                 if (nextToken()) {
                     if (currentToken == Token.DOIS_PONTOS) {
+                        declVar2.add(new DefaultMutableTreeNode(":"));
                         removeToken();
-                        if (new TipoHandler(tokens).handle()) {
+                        if (new TipoHandler(tokens, declVar2).handle()) {
+                            this.noPai.add(declVar2);
                             return true;
-                        } else {
-                            return false;
-                        }
+                        }  
+                        return false;
                     } else {
                         setCodError(1); // Esperado ":", mas encontrado outra coisa
                         return false;

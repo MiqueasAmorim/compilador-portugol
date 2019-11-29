@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,25 +16,30 @@ import model.TokenModel;
  */
 public class DeclConsList2Handler extends AbstractHandler {
 
-    public DeclConsList2Handler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public DeclConsList2Handler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode declConsList2 = new DefaultMutableTreeNode("DeclConsList2");
         if (nextToken()) {
             if (currentToken == Token.DOIS_PONTOS) {
+                declConsList2.add(new DefaultMutableTreeNode(":"));
                 removeToken();
                 if (nextToken()) {
-                    if (new TipoHandler(tokens).handle()) {
+                    if (new TipoHandler(tokens, declConsList2).handle()) {
                         if (nextToken()) {
                             if (currentToken == Token.OP_IGUAL) {
+                                declConsList2.add(new DefaultMutableTreeNode("="));
                                 removeToken();
-                                if (new ValorHandler(tokens).handle()) {
+                                if (new ValorHandler(tokens, declConsList2).handle()) {
                                     if (nextToken()) {
                                         if (currentToken == Token.PONTO_VIRGULA) {
+                                            declConsList2.add(new DefaultMutableTreeNode(";"));
                                             removeToken();
-                                            if (new DeclConsList1Handler(tokens).handle()) {
+                                            if (new DeclConsList1Handler(tokens, declConsList2).handle()) {
+                                                this.noPai.add(declConsList2);
                                                 return true;
                                             } else {
                                                 return false;
@@ -70,12 +76,15 @@ public class DeclConsList2Handler extends AbstractHandler {
             }
 
             if (currentToken == Token.OP_IGUAL) {
+                declConsList2.add(new DefaultMutableTreeNode("="));
                 removeToken();
-                if (new ValorHandler(tokens).handle()) {
+                if (new ValorHandler(tokens, declConsList2).handle()) {
                     if (nextToken()) {
                         if (currentToken == Token.PONTO_VIRGULA) {
+                            declConsList2.add(new DefaultMutableTreeNode(";"));
                             removeToken();
-                            if (new DeclConsList1Handler(tokens).handle()) {
+                            if (new DeclConsList1Handler(tokens, declConsList2).handle()) {
+                                this.noPai.add(declConsList2);
                                 return true;
                             } else {
                                 return false;

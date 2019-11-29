@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,17 +16,24 @@ import model.TokenModel;
  */
 public class ConjuntoIdsHandler extends AbstractHandler {
 
-    public ConjuntoIdsHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public ConjuntoIdsHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode conjuntoIds = new DefaultMutableTreeNode("ConjuntoIds");
 //        if (nextToken()) {
             nextToken();
             if (currentToken == Token.VIRGULA) {
+                conjuntoIds.add(new DefaultMutableTreeNode(","));
                 removeToken();
-                return (new VariavelHandler(tokens).handle() && new ConjuntoIdsHandler(tokens).handle());
+                if (new IdentificadorHandler(tokens, conjuntoIds).handle() && new ConjuntoIdsHandler(tokens, conjuntoIds).handle()) {
+                    this.noPai.add(conjuntoIds);
+                    return true;
+                } else {
+                    return false;
+                }
             } else if (currentToken == Token.DOIS_PONTOS) {
                 return true;
             }

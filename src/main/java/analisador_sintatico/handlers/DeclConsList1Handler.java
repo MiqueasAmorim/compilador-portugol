@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.TokenModel;
 
 /**
@@ -14,14 +15,16 @@ import model.TokenModel;
  */
 public class DeclConsList1Handler extends AbstractHandler {
 
-    public DeclConsList1Handler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public DeclConsList1Handler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
-        if (new DeclConstHandler(tokens).handle()) {
-            if (new DeclConsList2Handler(tokens).handle()) {
+        DefaultMutableTreeNode declConsList1 = new DefaultMutableTreeNode("DeclConsList1");
+        if (new DeclConstHandler(tokens, declConsList1).handle()) {
+            if (new DeclConsList2Handler(tokens, declConsList1).handle()) {
+                this.noPai.add(declConsList1);
                 return true;
             } else {
                 return false;

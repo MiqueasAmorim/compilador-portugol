@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,52 +16,74 @@ import model.TokenModel;
  */
 public class DeclProcHandler extends AbstractHandler {
 
-    public DeclProcHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public DeclProcHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode declProc = new DefaultMutableTreeNode("DeclProc");
         if (nextToken()) {
             if (currentToken == Token.PC_PROCEDIMENTO) {
+                declProc.add(new DefaultMutableTreeNode("procedimento"));
                 removeToken();
                 if (nextToken()) {
-                    if (currentToken == Token.IDENTIFICADOR) {
-                        removeToken();
+                    //if (currentToken == Token.IDENTIFICADOR) {
+                    if (new IdentificadorHandler(tokens, declProc).handle()) {
+                        //removeToken();
                         if (nextToken()) {
                             if (currentToken == Token.ABRE_PARENTESES) {
+                                declProc.add(new DefaultMutableTreeNode("("));
                                 removeToken();
-                                if (new ParametrosHandler(tokens).handle()) {
+                                if (new ParametrosHandler(tokens, declProc).handle()) {
                                     if (currentToken == Token.FECHA_PARENTESES) {
+                                        declProc.add(new DefaultMutableTreeNode(")"));
                                         removeToken();
                                         if (nextToken()) {
                                             if (currentToken == Token.PONTO_VIRGULA) {
+                                                declProc.add(new DefaultMutableTreeNode(";"));
                                                 removeToken();
                                                 nextToken();
                                                 if (currentToken == Token.PC_CONSTANTE) {
-                                                    if (new DeclaracaoConstanteHandler(tokens).handle()) {
+                                                    if (new DeclaracaoConstanteHandler(tokens, declProc).handle()) {
                                                         nextToken();
                                                         if (currentToken == Token.PC_VARIAVEL) {
-                                                            if (new DeclaracaoVariavelHandler(tokens).handle()) {
-                                                                return (new BlocoHandler(tokens).handle());
+                                                            if (new DeclaracaoVariavelHandler(tokens, declProc).handle()) {
+                                                                if (new BlocoHandler(tokens, declProc).handle()) {
+                                                                    this.noPai.add(declProc);
+                                                                    return true;
+                                                                }
+                                                                return false;
                                                             } else {
                                                                 return false;
                                                             }
                                                         } else {
-                                                            return new BlocoHandler(tokens).handle();
+                                                            if (new BlocoHandler(tokens, declProc).handle()) {
+                                                                this.noPai.add(declProc);
+                                                                return true;
+                                                            }
+                                                            return false;
                                                         }
                                                     } else {
                                                         return false;
                                                     }
                                                 }
                                                 if (currentToken == Token.PC_VARIAVEL) {
-                                                    if (new DeclaracaoVariavelHandler(tokens).handle()) {
-                                                        return (new BlocoHandler(tokens).handle());
+                                                    if (new DeclaracaoVariavelHandler(tokens, declProc).handle()) {
+                                                        if (new BlocoHandler(tokens, declProc).handle()) {
+                                                            this.noPai.add(declProc);
+                                                            return true;
+                                                        }
+                                                        return false;
                                                     } else {
                                                         return false;
                                                     }
                                                 }
-                                                return (new BlocoHandler(tokens).handle());
+                                                if (new BlocoHandler(tokens, declProc).handle()) {
+                                                    this.noPai.add(declProc);
+                                                    return true;
+                                                }
+                                                return false;
                                             } else {
                                                 setCodError(10); //Esperado ";" , mas encontrou outra cisa.
                                                 return false;
@@ -94,35 +117,47 @@ public class DeclProcHandler extends AbstractHandler {
                 }
             }
             if (currentToken == Token.PC_FUNCAO) {
+                declProc.add(new DefaultMutableTreeNode("funcao"));
                 removeToken();
                 if (nextToken()) {
-                    if (currentToken == Token.IDENTIFICADOR) {
-                        removeToken();
+                    if (new IdentificadorHandler(tokens, declProc).handle()) {
+                        //removeToken();
                         if (nextToken()) {
                             if (currentToken == Token.ABRE_PARENTESES) {
+                                declProc.add(new DefaultMutableTreeNode("("));
                                 removeToken();
-                                if (new ParametrosHandler(tokens).handle()) {
+                                if (new ParametrosHandler(tokens, declProc).handle()) {
                                     if (currentToken == Token.FECHA_PARENTESES) {
+                                        declProc.add(new DefaultMutableTreeNode(")"));
                                         removeToken();
                                         if (nextToken()) {
                                             if (currentToken == Token.DOIS_PONTOS) {
+                                                declProc.add(new DefaultMutableTreeNode(":"));
                                                 removeToken();
-                                                if (new TipoHandler(tokens).handle()) {
+                                                if (new TipoHandler(tokens, declProc).handle()) {
                                                     if (nextToken()) {
                                                         if (currentToken == Token.PONTO_VIRGULA) {
+                                                            declProc.add(new DefaultMutableTreeNode(";"));
                                                             removeToken();
                                                             nextToken();
                                                             if (currentToken == Token.PC_CONSTANTE) {
-                                                                if (new DeclaracaoConstanteHandler(tokens).handle()) {
+                                                                if (new DeclaracaoConstanteHandler(tokens, declProc).handle()) {
                                                                     nextToken();
                                                                     if (currentToken == Token.PC_VARIAVEL) {
-                                                                        if (new DeclaracaoVariavelHandler(tokens).handle()) {
-                                                                            return (new BlocoHandler(tokens).handle());
-                                                                        } else {
+                                                                        if (new DeclaracaoVariavelHandler(tokens, declProc).handle()) {
+                                                                            if (new BlocoHandler(tokens, declProc).handle()) {
+                                                                                this.noPai.add(declProc);
+                                                                                return true;
+                                                                            }
                                                                             return false;
                                                                         }
+                                                                        return false;
                                                                     } else {
-                                                                        return (new BlocoHandler(tokens).handle());
+                                                                        if (new BlocoHandler(tokens, declProc).handle()) {
+                                                                            this.noPai.add(declProc);
+                                                                            return true;
+                                                                        }
+                                                                        return false;
                                                                     }
                                                                 } else {
                                                                     return false;
@@ -130,14 +165,20 @@ public class DeclProcHandler extends AbstractHandler {
                                                             }
 
                                                             if (currentToken == Token.PC_VARIAVEL) {
-                                                                if (new DeclaracaoVariavelHandler(tokens).handle()) {
-                                                                    return (new BlocoHandler(tokens).handle());
-                                                                } else {
+                                                                if (new DeclaracaoVariavelHandler(tokens, declProc).handle()) {
+                                                                    if (new BlocoHandler(tokens, declProc).handle()) {
+                                                                        this.noPai.add(declProc);
+                                                                        return true;
+                                                                    }
                                                                     return false;
                                                                 }
+                                                                return false;
                                                             }
-                                                            
-                                                            return (new BlocoHandler(tokens).handle());
+                                                            if (new BlocoHandler(tokens, declProc).handle()) {
+                                                                this.noPai.add(declProc);
+                                                                return true;
+                                                            }
+                                                            return false;
                                                         } else {
                                                             setCodError(10); //Esperado ";" , mas encontrou outra cisa.
                                                             return false;

@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,16 +16,19 @@ import model.TokenModel;
  */
 public class MaisConteudoHandler extends AbstractHandler {
 
-    public MaisConteudoHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public MaisConteudoHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode maisConteudo = new DefaultMutableTreeNode("MaisConteudo");
         nextToken();
         if (currentToken == Token.VIRGULA) {
+            maisConteudo.add(new DefaultMutableTreeNode(","));
             removeToken();
-            if (new ConteudoHandler(tokens).handle() && new MaisConteudoHandler(tokens).handle()) {
+            if (new ConteudoHandler(tokens, maisConteudo).handle() && new MaisConteudoHandler(tokens, maisConteudo).handle()) {
+                this.noPai.add(maisConteudo);
                 return true;
             } else {
                 return false;

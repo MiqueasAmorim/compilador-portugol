@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,22 +16,27 @@ import model.TokenModel;
  */
 public class BlocoHandler extends AbstractHandler {
 
-    public BlocoHandler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public BlocoHandler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode bloco = new DefaultMutableTreeNode("Bloco");
         if (nextToken()) {
             if (currentToken == Token.PC_INICIO) {
+                bloco.add(new DefaultMutableTreeNode("inicio"));
                 removeToken();
-                if (new InstrucoesHandler(tokens).handle()) {
+                if (new InstrucoesHandler(tokens, bloco).handle()) {
                     if (nextToken()) {
                         if (currentToken == Token.PC_FIM) {
+                            bloco.add(new DefaultMutableTreeNode("fim"));
                             removeToken();
                             if (nextToken()) {
                                 if (currentToken == Token.PONTO_VIRGULA) {
+                                    bloco.add(new DefaultMutableTreeNode(";"));
                                     removeToken();
+                                    this.noPai.add(bloco);
                                     return true;
                                 } else {
                                     setCodError(10);// Esperado ";", mas encontrou outra coisa

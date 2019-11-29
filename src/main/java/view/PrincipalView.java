@@ -3,6 +3,7 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
@@ -55,6 +56,7 @@ public class PrincipalView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane = new javax.swing.JScrollPane();
         tblTokens = new javax.swing.JTable();
+        panelArvoreSintatica = new javax.swing.JPanel();
         paneCodigo = new javax.swing.JTabbedPane();
         panelCodigo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -160,6 +162,9 @@ public class PrincipalView extends javax.swing.JFrame {
 
         paneAnalises.addTab("Tabela de tokens", jPanel2);
 
+        panelArvoreSintatica.setLayout(new java.awt.BorderLayout());
+        paneAnalises.addTab("Árvore sintática", panelArvoreSintatica);
+
         jSplitPane1.setLeftComponent(paneAnalises);
 
         panelCodigo.setLayout(new javax.swing.BoxLayout(panelCodigo, javax.swing.BoxLayout.LINE_AXIS));
@@ -230,9 +235,9 @@ public class PrincipalView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(paneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                .addComponent(paneOutput, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -304,6 +309,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JTabbedPane paneAnalises;
     private javax.swing.JTabbedPane paneCodigo;
     private javax.swing.JTabbedPane paneOutput;
+    private javax.swing.JPanel panelArvoreSintatica;
     private javax.swing.JPanel panelCodigo;
     private javax.swing.JPanel panelOutput;
     private javax.swing.JTable tblOutput;
@@ -370,4 +376,8 @@ public class PrincipalView extends javax.swing.JFrame {
         return menuItemAnaliseAutomatica;
     }
 
+    public JPanel getPanelArvoreSintatica() {
+        return panelArvoreSintatica;
+    }
+    
 }

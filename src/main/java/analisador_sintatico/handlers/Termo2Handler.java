@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,16 +16,22 @@ import model.TokenModel;
  */
 public class Termo2Handler extends AbstractHandler {
 
-    public Termo2Handler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public Termo2Handler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode termo2 = new DefaultMutableTreeNode("Termo2");
         nextToken();
         if (currentToken == Token.OP_MULTIPLICACAO || currentToken == Token.OP_DIVISAO || currentToken == Token.PC_RESTO || currentToken == Token.PC_QUOCIENTE) {
+            termo2.add(new DefaultMutableTreeNode(getCurrentLexema()));
             removeToken();
-            return (new UnarioHandler(tokens).handle() && new Termo2Handler(tokens).handle());
+            if (new UnarioHandler(tokens, termo2).handle() && new Termo2Handler(tokens, termo2).handle()) {
+                this.noPai.add(termo2);
+                return true;
+            }
+            return false;
         }
         return true;
     }

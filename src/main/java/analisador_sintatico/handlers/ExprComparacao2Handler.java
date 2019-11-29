@@ -6,6 +6,7 @@
 package analisador_sintatico.handlers;
 
 import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Token;
 import model.TokenModel;
 
@@ -15,17 +16,23 @@ import model.TokenModel;
  */
 public class ExprComparacao2Handler extends AbstractHandler {
 
-    public ExprComparacao2Handler(ArrayList<TokenModel> tokens) {
-        super(tokens);
+    public ExprComparacao2Handler(ArrayList<TokenModel> tokens, DefaultMutableTreeNode noPai) {
+        super(tokens, noPai);
     }
 
     @Override
     public boolean handle() {
+        DefaultMutableTreeNode exprComparacao2 = new DefaultMutableTreeNode("ExprComparacao2");
         nextToken();
         if (currentToken == Token.OP_IGUAL || currentToken == Token.OP_DIFERENTE || currentToken == Token.OP_MENOR ||
         currentToken == Token.OP_MENOR_IGUAL || currentToken == Token.OP_MAIOR || currentToken == Token.OP_MAIOR_IGUAL) {
+            exprComparacao2.add(new DefaultMutableTreeNode(getCurrentLexema()));
             removeToken();
-            return (new ExprOpHandler(tokens).handle() && new ExprComparacao2Handler(tokens).handle());
+            if (new ExprOpHandler(tokens, exprComparacao2).handle() && new ExprComparacao2Handler(tokens, exprComparacao2).handle()) {
+                this.noPai.add(exprComparacao2);
+                return true;
+            }
+            return false;
         }
         return true;
     }
